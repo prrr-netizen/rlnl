@@ -91,18 +91,37 @@ body::after {
   box-shadow: 0 0 0 1px rgba(0, 80, 160, 0.35);
 }
 
-.button.is-blurple {
-  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
-  border: none;
-  color: #ffffff;
+/* ===== 공통 버튼 스타일 (프루티거 에어로) ===== */
+.button.is-blurple,
+.hero .button.is-info,
+.hero .button.is-primary.is-outlined,
+.section .button.is-blurple.is-medium {
   position: relative;
   overflow: hidden;
+  border-radius: 999px;
+  border: none;
   box-shadow:
     0 4px 10px rgba(0, 0, 0, 0.45),
     0 0 0 1px rgba(255, 255, 255, 0.85) inset;
 }
 
-.button.is-blurple::after {
+.button.is-blurple,
+.hero .button.is-info,
+.section .button.is-blurple.is-medium {
+  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
+  color: #ffffff;
+}
+
+.hero .button.is-primary.is-outlined {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.96), rgba(220,235,248,0.98));
+  color: #004b8d;
+}
+
+/* 상단 유광 하이라이트 */
+.button.is-blurple::after,
+.hero .button.is-info::after,
+.section .button.is-blurple.is-medium::after,
+.hero .button.is-primary.is-outlined::after {
   content: "";
   position: absolute;
   top: 5%;
@@ -110,11 +129,13 @@ body::after {
   right: 8%;
   height: 40%;
   border-radius: 999px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.1));
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.06));
   pointer-events: none;
 }
 
-.button.is-blurple:hover {
+.button:hover,
+.hero .button:hover,
+.section .button.is-blurple.is-medium:hover {
   filter: brightness(1.05);
   transform: translateY(-1px);
 }
@@ -124,6 +145,7 @@ body::after {
   .navbar.is-fixed-top {
     border-radius: 18px;
     margin-top: 4px;
+    margin-inline: 10px;
   }
 }
 
@@ -145,42 +167,6 @@ body::after {
 
 .hero .subtitle {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
-}
-
-/* Hero 버튼 */
-.hero .button.is-info {
-  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
-  border: none;
-  position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.85) inset;
-}
-
-.hero .button.is-info::after {
-  content: "";
-  position: absolute;
-  top: 5%;
-  left: 8%;
-  right: 8%;
-  height: 40%;
-  border-radius: 999px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.1));
-}
-
-.hero .button.is-primary.is-outlined {
-  background: linear-gradient(to bottom, rgba(255,255,255,0.96), rgba(220,235,248,0.98));
-  border: none;
-  color: #004b8d;
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.9) inset;
-}
-
-.hero .button:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
 }
 
 /* Hero 이미지 살짝 글래스 느낌 */
@@ -209,7 +195,7 @@ body::after {
 /* 프루티거 에어로 글래스 카드 스타일 */
 .single-feature,
 #stats .columns > .column,
-.section:last-of-type .columns > .column:first-child {
+.section.mt-6:last-of-type {
   border-radius: 24px;
   padding: 18px 18px 20px;
   background: radial-gradient(circle at top, rgba(255,255,255,0.9), rgba(220,235,248,0.95));
@@ -231,7 +217,7 @@ body::after {
   color: #003c78;
 }
 
-/* Features 섹션 제목 라인 */
+/* 섹션 제목 라인 */
 .title.lined {
   position: relative;
   display: inline-block;
@@ -259,33 +245,6 @@ body::after {
 #stats .title.lined {
   font-size: 2rem;
   text-shadow: 0 3px 6px rgba(0,0,0,0.4);
-}
-
-/* Invite 섹션 버튼 */
-.section .button.is-blurple.is-medium {
-  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
-  border: none;
-  position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 4px 10px rgba(0,0,0,0.5),
-    0 0 0 1px rgba(255,255,255,0.85) inset;
-}
-
-.section .button.is-blurple.is-medium::after {
-  content: "";
-  position: absolute;
-  top: 5%;
-  left: 8%;
-  right: 8%;
-  height: 40%;
-  border-radius: 999px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.08));
-}
-
-.section .button.is-blurple.is-medium:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
 }
 
 /* ===== Footer ===== */
@@ -335,11 +294,7 @@ body::after {
 
   .single-feature,
   #stats .columns > .column,
-  .section:last-of-type .columns > .column:first-child {
+  .section.mt-6:last-of-type {
     padding: 14px;
-  }
-
-  .navbar.is-fixed-top {
-    margin-inline: 10px;
   }
 }
