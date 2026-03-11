@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>rlnl - Discord 라이선스 봇</title>
+    <title>rlnl · Discord 라이선스 관리 봇</title>
 
     <!-- 로컬 CSS -->
     <link rel="stylesheet" href="bulma.min.css" />
@@ -25,7 +25,7 @@
   </head>
   <body>
     <!-- Back To Top Start -->
-    <a id="backtotop" data-tippy-content="Back To Top.">
+    <a id="backtotop" data-tippy-content="맨 위로 이동">
       <i class="fa-solid fa-angle-up has-text-white fa-2xl mt-5"></i>
     </a>
     <!-- Back To Top End -->
@@ -53,19 +53,19 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a href="#" class="navbar-item is-tab">
-            Home
+            홈
           </a>
 
           <a href="#features" class="navbar-item is-tab">
-            Features
+            기능 소개
           </a>
 
           <a href="#stats" class="navbar-item is-tab">
-            Stats
+            통계
           </a>
 
           <a href="#" class="navbar-item is-tab">
-            Docs
+            문서 (준비 중)
           </a>
         </div>
 
@@ -80,10 +80,10 @@
 
           <div class="navbar-item">
             <div class="buttons">
-              <a href="#" class="button is-blurple">
+              <a href="#" class="button is-blurple" title="웹 패널 로그인 기능은 준비 중입니다.">
                 <strong>
                   <i class="fa-solid fa-right-to-bracket mr-2"></i>
-                  Login (준비 중)
+                  패널 로그인 (준비 중)
                 </strong>
               </a>
             </div>
@@ -100,21 +100,23 @@
           <div class="columns">
             <div class="column mr-6 mt-12" data-aos="fade-up">
               <p class="title has-text-white has-text-weight-bold">
-                디스코드에서 끝내는 라이선스 관리, <span class="blurple">rlnl</span>.
+                디스코드에서 끝내는 라이선스 관리,<br />
+                <span class="blurple">rlnl</span> 라이선스 봇.
               </p>
               <p class="subtitle has-text-grey-light is-size-6 mt-3">
-                rlnl은 디스코드 전용 라이선스 관리 봇입니다.
-                지금은 테스트 단계로, 전용 테스트 서버에서 기능을 먼저 검증하고 있습니다.
+                rlnl은 디스코드 전용 라이선스 관리 봇입니다.<br />
+                라이선스 발급 · 인증 · 만료 · 역할 연동까지 모두 디스코드 안에서 처리할 수 있도록 목표하고 있습니다.
+                현재는 테스트 단계로, 전용 테스트 서버에서 먼저 기능을 검증하고 있습니다.
               </p>
               <div class="buttons">
                 <a href="https://discord.gg/dsZjSb8JS2" class="button is-info">
-                  <strong>테스트 서버 입장하기</strong>
+                  <strong>테스트 서버 입장</strong>
                 </a>
 
                 <a href="#features" class="button is-primary is-outlined">
                   <strong>
                     <i class="fa-solid fa-crown"></i>
-                    기능 살펴보기
+                    기능 자세히 보기
                   </strong>
                 </a>
               </div>
@@ -123,14 +125,14 @@
               <img
                 class="image has-image-centered vert-move mt-4"
                 src="relaunch_day.svg"
-                alt="hero image"
+                alt="rlnl 라이선스 봇"
                 style="width: 20rem;"
               />
             </div>
           </div>
         </div>
       </div>
-      <div class="has-text-centered" data-tippy-content="Scroll Down">
+      <div class="has-text-centered" data-tippy-content="기능 소개로 이동">
         <a href="#features">
           <i class="fa-solid fa-circle-chevron-down fa-lg vert-move2 has-text-white"></i>
         </a>
@@ -151,7 +153,7 @@
     <!-- Features Section Start -->
     <section id="features" class="section mt-6">
       <div class="has-text-centered">
-        <h1 class="title lined">Features</h1>
+        <h1 class="title lined">주요 기능</h1>
         <div class="line line-center blurple"></div>
       </div>
 
@@ -159,17 +161,17 @@
       <div class="single-feature">
         <div class="columns mt-6">
           <div class="column mr-6">
-            <h4 class="title">자동 라이선스 <span class="blurple">발급</span></h4>
+            <h4 class="title">결제 연동 <span class="blurple">자동 라이선스 발급</span></h4>
             <p class="subtitle mt-3">
-              결제 완료와 동시에 라이선스를 자동 발급하는 것을 목표로 개발 중입니다.
-              추후에는 상점과 연동하여 별도 작업 없이 키가 발급되도록 지원할 예정입니다.
+              결제 완료와 동시에 라이선스 키를 자동 발급하는 구조를 목표로 개발 중입니다.<br />
+              추후에는 RLNL Mall / 상점과 연동하여, 별도 작업 없이 디스코드에서 바로 키를 발급받을 수 있도록 지원할 예정입니다.
             </p>
           </div>
           <div class="column" data-aos="fade-left">
             <img
               class="image has-image-centered"
               src="features1.svg"
-              alt="feature1 img"
+              alt="자동 라이선스 발급"
               style="width: 23rem;"
             />
           </div>
@@ -183,17 +185,17 @@
             <img
               class="image has-image-centered"
               src="features2.svg"
-              alt="feature2 img"
+              alt="디스코드 내 인증"
               style="width: 23rem;"
             />
           </div>
           <div class="column">
             <h4 class="title">
-              디스코드에서 <span class="has-text-primary">바로 인증</span>
+              디스코드에서 <span class="has-text-primary">즉시 라이선스 인증</span>
             </h4>
             <p class="subtitle mt-3">
-              /license link 명령어 하나로 라이선스를 계정이나 서버에 연결하는 방식을 설계하고 있습니다.
-              인증 결과는 웹 패널과도 연동될 예정입니다.
+              <code>/license link</code> 명령어 하나로 라이선스를 디스코드 계정 또는 서버에 연결하는 방식을 설계하고 있습니다.<br />
+              인증 결과는 웹 패널과도 연동되어, 어느 계정/서버에 어떤 라이선스가 연결되어 있는지 한눈에 확인할 수 있게 될 예정입니다.
             </p>
           </div>
         </div>
@@ -204,18 +206,18 @@
         <div class="columns mt-6">
           <div class="column mr-6">
             <h4 class="title">
-              만료 &amp; 역할 <span class="has-text-warning">자동 관리</span>
+              만료 · 경고 · 역할 <span class="has-text-warning">자동 관리</span>
             </h4>
             <p class="subtitle mt-3">
-              라이선스 만료 시 역할을 자동으로 제거하고 알림을 보내는 기능을 개발 중입니다.
-              테스트 서버에서 먼저 안정성을 확인한 후 실제 서비스에 적용할 계획입니다.
+              라이선스 만료일을 자동으로 체크하고, 디스코드 역할과 연동하여 만료 시 역할 제거 및 알림 발송까지 처리하는 기능을 개발 중입니다.<br />
+              테스트 서버에서 먼저 안정성을 검증한 뒤, 실제 판매용 서비스에 순차적으로 적용할 계획입니다.
             </p>
           </div>
           <div class="column" data-aos="fade-left">
             <img
               class="image has-image-centered"
               src="features3.svg"
-              alt="feature3 img"
+              alt="만료 및 역할 자동 관리"
               style="width: 23rem;"
             />
           </div>
@@ -229,15 +231,15 @@
             <img
               class="image has-image-centered"
               src="features4.svg"
-              alt="feature4 img"
+              alt="웹 대시보드"
               style="width: 23rem;"
             />
           </div>
           <div class="column">
-            <h4 class="title">웹 <span class="has-text-info">대시보드</span></h4>
+            <h4 class="title">웹 <span class="has-text-info">관리 대시보드</span></h4>
             <p class="subtitle mt-3">
-              브라우저에서 라이선스를 한눈에 관리할 수 있는 대시보드를 준비 중입니다.
-              키 상태, 사용자, 서버 정보를 직관적으로 확인하는 것이 목표입니다.
+              브라우저에서 라이선스를 한눈에 관리할 수 있는 대시보드를 준비 중입니다.<br />
+              라이선스 상태, 사용자/서버 정보, 만료 일정, 사용 로그 등을 직관적으로 확인하고, 필요한 조치를 바로 취할 수 있는 것이 목표입니다.
             </p>
           </div>
         </div>
@@ -248,7 +250,7 @@
     <!-- Stats Section Start -->
     <section id="stats" class="section mt-6">
       <div class="has-text-centered">
-        <h1 class="title lined">Stats</h1>
+        <h1 class="title lined">서비스 현황</h1>
         <div class="line line-center blurple"></div>
       </div>
 
@@ -256,21 +258,21 @@
         <div class="column has-text-centered">
           <p class="title has-text-weight-bold lined">000</p>
           <span class="subtitle has-text-weight-bold blurple">
-            <i class="fa-solid fa-server"></i> 연결 서버
+            <i class="fa-solid fa-server"></i> 연결 서버 수
           </span>
         </div>
 
         <div class="column has-text-centered">
           <p class="title has-text-weight-bold lined">000</p>
           <span class="subtitle has-text-weight-bold blurple">
-            <i class="fa-solid fa-terminal"></i> 명령어
+            <i class="fa-solid fa-terminal"></i> 제공 예정 명령어
           </span>
         </div>
 
         <div class="column has-text-centered">
           <p class="title has-text-weight-bold lined">000</p>
           <span class="subtitle has-text-weight-bold blurple">
-            <i class="fa-solid fa-users"></i> 인증 사용자
+            <i class="fa-solid fa-users"></i> 예정 인증 사용자
           </span>
         </div>
       </div>
@@ -279,24 +281,20 @@
 
     <!-- Invite Section Start -->
     <section class="section mt-6">
-      <div class="columns">
-        <div class="column has-text-left">
-          <p class="title has-text-weight-bold">
-            Ready to try <span class="blurple">rlnl</span>?
-          </p>
-          <p class="subtitle mt-3 has-text-gray">
-            rlnl은 아직 테스트 중인 프로젝트입니다.
-            테스트 서버에 참여해서 개발 진행 상황을 가장 먼저 확인해보세요.
-          </p>
-          <a href="https://discord.gg/dsZjSb8JS2" class="button is-blurple is-medium">
-            <strong>
-              <i class="fa-solid fa-book"></i>
-              테스트 서버 입장하기
-            </strong>
-          </a>
-        </div>
-
-        <div class="column"></div>
+      <div class="has-text-left">
+        <p class="title has-text-weight-bold">
+          Ready to try <span class="blurple">rlnl</span>?
+        </p>
+        <p class="subtitle mt-3 has-text-gray">
+          rlnl은 아직 테스트 단계에 있는 프로젝트입니다.<br />
+          전용 테스트 서버에 참여하시면, 개발 진행 상황과 신규 기능을 가장 먼저 체험하실 수 있습니다.
+        </p>
+        <a href="https://discord.gg/dsZjSb8JS2" class="button is-blurple is-medium">
+          <strong>
+            <i class="fa-solid fa-book"></i>
+            테스트 서버 입장
+          </strong>
+        </a>
       </div>
     </section>
     <!-- Invite Section End -->
@@ -315,9 +313,9 @@
         </div>
 
         <p>
-          <span class="has-text-weight-bold">rlnl</span>
+          <span class="has-text-weight-bold">rlnl · Discord License Bot</span>
           <br />
-          &copy; <span id="cp-year"></span> Copyright Nana. All Rights Reserved.
+          &copy; <span id="cp-year"></span> Nana. All Rights Reserved.
         </p>
       </div>
     </footer>
