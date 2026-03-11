@@ -4,7 +4,7 @@ AOS.init({
   once: true
 });
 
-// navbar burger (Bulma)
+// navbar burger 토글
 document.addEventListener("DOMContentLoaded", () => {
   const burger = document.querySelector(".navbar-burger");
   const menu = document.querySelector("#navbarBasicExample");
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// jQuery 버전 토글 (기존 템플릿 호환용, 중복 동작해도 문제 없음)
+// jQuery 버전 토글 (기존 템플릿 호환용)
 $(document).ready(function () {
   $(".navbar-burger").click(function () {
     $(".navbar-burger").toggleClass("is-active");
