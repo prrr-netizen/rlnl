@@ -14,23 +14,37 @@ body {
 body {
   font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
   color: #ffffff;
-  background: radial-gradient(circle at top, #64c8dc 0, #0050a0 40%, #003c78 100%);
+  background: radial-gradient(circle at top, #64c8dc 0, #0050a0 40%, #003463 100%);
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* ===== 프루티거 에어로 배경 오버레이 ===== */
-body::before {
+/* ===== 프루티거 에어로 배경 오버레이 + 버블 ===== */
+body::before,
+body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 60%),
-    radial-gradient(circle at 80% 60%, rgba(100, 200, 220, 0.35), transparent 55%);
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.24), transparent 60%),
+    radial-gradient(circle at 80% 65%, rgba(100, 200, 220, 0.38), transparent 55%);
   mix-blend-mode: screen;
   opacity: 0.9;
-  z-index: -1;
+}
+
+/* 버블 구체 */
+body::after {
+  background:
+    radial-gradient(circle at 12% 78%, rgba(255,255,255,0.92), rgba(100,200,220,0.9), rgba(0,120,200,0.1) 70%, transparent 72%),
+    radial-gradient(circle at 90% 12%, rgba(255,255,255,0.9), rgba(120,220,240,0.85), rgba(0,110,190,0.12) 65%, transparent 70%);
+  filter: blur(0.3px);
+  opacity: 0.95;
 }
 
 /* ===== 공통 유틸 ===== */
@@ -49,10 +63,10 @@ body::before {
 
 /* ===== 네비게이션 바 (프루티거 에어로 스타일) ===== */
 .navbar.is-fixed-top {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(210, 230, 245, 0.97));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(215, 235, 250, 0.98));
   box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+    0 6px 18px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.9) inset;
   border-radius: 999px;
   max-width: 1080px;
   margin: 10px auto 0 auto;
@@ -69,21 +83,35 @@ body::before {
   color: #004b8d;
   font-weight: 600;
   border-bottom: none;
-}
-
-.navbar .navbar-item.is-tab:hover {
-  background: rgba(0, 80, 160, 0.1);
-  box-shadow: 0 0 0 1px rgba(0, 80, 160, 0.3);
   border-radius: 999px;
 }
 
+.navbar .navbar-item.is-tab:hover {
+  background: rgba(0, 80, 160, 0.12);
+  box-shadow: 0 0 0 1px rgba(0, 80, 160, 0.35);
+}
+
 .button.is-blurple {
-  background: linear-gradient(to bottom, #64c8dc, #0078c8);
+  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
   border: none;
   color: #ffffff;
+  position: relative;
+  overflow: hidden;
   box-shadow:
     0 4px 10px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+    0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+}
+
+.button.is-blurple::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 8%;
+  right: 8%;
+  height: 40%;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.1));
+  pointer-events: none;
 }
 
 .button.is-blurple:hover {
@@ -94,7 +122,7 @@ body::before {
 /* 모바일에서 네비게이션 바 모양 유지 */
 @media (max-width: 1023px) {
   .navbar.is-fixed-top {
-    border-radius: 20px;
+    border-radius: 18px;
     margin-top: 4px;
   }
 }
@@ -112,7 +140,7 @@ body::before {
 .hero .title {
   font-size: 2.4rem;
   line-height: 1.25;
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.55);
 }
 
 .hero .subtitle {
@@ -121,15 +149,28 @@ body::before {
 
 /* Hero 버튼 */
 .hero .button.is-info {
-  background: linear-gradient(to bottom, #64c8dc, #0078c8);
+  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
   border: none;
+  position: relative;
+  overflow: hidden;
   box-shadow:
     0 4px 10px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+    0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+}
+
+.hero .button.is-info::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 8%;
+  right: 8%;
+  height: 40%;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.1));
 }
 
 .hero .button.is-primary.is-outlined {
-  background: linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(210,230,245,0.95));
+  background: linear-gradient(to bottom, rgba(255,255,255,0.96), rgba(220,235,248,0.98));
   border: none;
   color: #004b8d;
   box-shadow:
@@ -144,7 +185,7 @@ body::before {
 
 /* Hero 이미지 살짝 글래스 느낌 */
 .hero img.image {
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.65));
 }
 
 /* ===== 스크롤 다운 아이콘 애니메이션 ===== */
@@ -158,8 +199,6 @@ body::before {
   100% { transform: translateY(0px); }
 }
 
-/* ===== Waves (이미 SVG에 색 지정되어 있으니 그대로 사용) ===== */
-
 /* ===== 공통 섹션 ===== */
 .section {
   max-width: 1080px;
@@ -167,18 +206,29 @@ body::before {
   margin-right: auto;
 }
 
-/* Features / Stats / Invite 카드에 글래스 카드 느낌 */
+/* 프루티거 에어로 글래스 카드 스타일 */
 .single-feature,
 #stats .columns > .column,
 .section:last-of-type .columns > .column:first-child {
   border-radius: 24px;
   padding: 18px 18px 20px;
-  background: rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: radial-gradient(circle at top, rgba(255,255,255,0.9), rgba(220,235,248,0.95));
   box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+    0 10px 24px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+  color: #003c78;
+}
+
+/* Features 내용 글자 색상 보정 */
+.single-feature .title,
+.single-feature .subtitle {
+  color: #003c78;
+}
+
+/* Stats 섹션에서 카드 안 텍스트 색 */
+#stats .title.lined,
+#stats .subtitle {
+  color: #003c78;
 }
 
 /* Features 섹션 제목 라인 */
@@ -200,24 +250,37 @@ body::before {
   background: linear-gradient(to right, #64c8dc, #4ad66d);
 }
 
-/* 중앙 라인 (기존 .line, .line-center, .blurple 대신) */
+/* 기존 .line 숨김 */
 .line {
-  display: none !important; /* 중복 라인 숨김 */
+  display: none !important;
 }
 
 /* Stats 숫자 강조 */
 #stats .title.lined {
   font-size: 2rem;
-  text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+  text-shadow: 0 3px 6px rgba(0,0,0,0.4);
 }
 
 /* Invite 섹션 버튼 */
 .section .button.is-blurple.is-medium {
-  background: linear-gradient(to bottom, #64c8dc, #0078c8);
+  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
   border: none;
+  position: relative;
+  overflow: hidden;
   box-shadow:
     0 4px 10px rgba(0,0,0,0.5),
-    0 0 0 1px rgba(255,255,255,0.8) inset;
+    0 0 0 1px rgba(255,255,255,0.85) inset;
+}
+
+.section .button.is-blurple.is-medium::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 8%;
+  right: 8%;
+  height: 40%;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.08));
 }
 
 .section .button.is-blurple.is-medium:hover {
@@ -228,7 +291,7 @@ body::before {
 /* ===== Footer ===== */
 .footer.bg-base {
   background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .footer .content {
@@ -249,14 +312,14 @@ body::before {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #64c8dc, #0078c8);
+  background: linear-gradient(to bottom, #7ae1f3, #0078c8);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow:
     0 6px 14px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+    0 0 0 1px rgba(255, 255, 255, 0.9) inset;
   z-index: 50;
 }
 
@@ -274,5 +337,9 @@ body::before {
   #stats .columns > .column,
   .section:last-of-type .columns > .column:first-child {
     padding: 14px;
+  }
+
+  .navbar.is-fixed-top {
+    margin-inline: 10px;
   }
 }
