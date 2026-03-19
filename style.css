@@ -1,608 +1,256 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>피지컬 - 프리미엄 스포츠 베팅</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 기본 스타일 -->
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #050610;
-      color: #f5f5f5;
-      line-height: 1.5;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    /* 헤더 */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(3, 4, 20, 0.95);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(14px);
-    }
-
-    .header-inner {
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
-
-    .logo-mark {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffcc66, #ff3366);
-      box-shadow: 0 0 18px rgba(255, 99, 132, 0.7);
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      font-size: 14px;
-    }
-
-    nav a {
-      opacity: 0.7;
-      transition: opacity 0.2s ease, color 0.2s ease;
-    }
-
-    nav a:hover {
-      opacity: 1;
-      color: #ffcc66;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border-color: rgba(255,255,255,0.2);
-      color: #ffffff;
-    }
-
-    .btn-outline:hover {
-      border-color: #ffcc66;
-      color: #ffcc66;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #ff7a3f, #ff3366);
-      color: #050610;
-      font-weight: 600;
-      box-shadow: 0 0 18px rgba(255, 99, 132, 0.6);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.06);
-      transform: translateY(-1px);
-      box-shadow: 0 0 24px rgba(255, 99, 132, 0.85);
-    }
-
-    /* 메인 히어로 */
-    main {
-      padding-top: 64px;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background:
-        radial-gradient(circle at top left, rgba(255, 153, 102, 0.12), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(102, 153, 255, 0.16), transparent 60%),
-        #050610;
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .hero-kicker {
-      font-size: 13px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #ffcc66;
-      margin-bottom: 16px;
-    }
-
-    .hero-title {
-      font-size: 40px;
-      line-height: 1.2;
-      margin-bottom: 18px;
-    }
-
-    .hero-title span.accent {
-      background: linear-gradient(135deg, #ffcc66, #ff3366);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 15px;
-      color: rgba(245,245,245,0.75);
-      margin-bottom: 28px;
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      font-size: 12px;
-      color: rgba(245,245,245,0.6);
-    }
-
-    .hero-meta span {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-meta-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #17c964;
-      box-shadow: 0 0 10px rgba(23, 201, 100, 0.9);
-    }
-
-    .hero-card {
-      background: radial-gradient(circle at top, rgba(255,255,255,0.08), rgba(8,9,26,0.98));
-      border-radius: 24px;
-      padding: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.7),
-        0 0 0 1px rgba(255,255,255,0.02);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at 10% 0%, rgba(255,204,102,0.14), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .hero-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .hero-card-title {
-      font-size: 14px;
-      color: rgba(245,245,245,0.8);
-    }
-
-    .hero-card-badge {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(23,201,100,0.1);
-      color: #17c964;
-      border: 1px solid rgba(23,201,100,0.5);
-    }
-
-    .hero-card-main {
-      margin-top: 8px;
-      margin-bottom: 18px;
-    }
-
-    .hero-balance-label {
-      font-size: 12px;
-      color: rgba(245,245,245,0.6);
-      margin-bottom: 4px;
-    }
-
-    .hero-balance-value {
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    .hero-balance-value span {
-      font-size: 14px;
-      margin-left: 4px;
-      color: rgba(245,245,245,0.65);
-    }
-
-    .hero-bar {
-      position: relative;
-      width: 100%;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      overflow: hidden;
-      margin-top: 14px;
-      margin-bottom: 12px;
-    }
-
-    .hero-bar-fill {
-      position: absolute;
-      inset: 0;
-      width: 68%;
-      background: linear-gradient(90deg, #17c964, #ffcc66, #ff3366);
-      box-shadow: 0 0 14px rgba(255,99,132,0.7);
-    }
-
-    .hero-card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: rgba(245,245,245,0.6);
-    }
-
-    .hero-card-footer strong {
-      color: #ffcc66;
-      font-weight: 600;
-    }
-
-    /* 특징 섹션 */
-    section {
-      padding: 70px 0;
-    }
-
-    .section-title {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .section-subtitle {
-      font-size: 14px;
-      color: rgba(245,245,245,0.7);
-      margin-bottom: 32px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .feature-card {
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: radial-gradient(circle at top, rgba(255,255,255,0.04), rgba(5,6,16,0.95));
-      padding: 18px 18px 20px;
-    }
-
-    .feature-label {
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #ffcc66;
-      margin-bottom: 10px;
-    }
-
-    .feature-title {
-      font-size: 15px;
-      margin-bottom: 8px;
-    }
-
-    .feature-body {
-      font-size: 13px;
-      color: rgba(245,245,245,0.7);
-    }
-
-    /* 하단 정보/푸터 */
-    .info-strip {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding: 18px 0;
-      font-size: 11px;
-      color: rgba(245,245,245,0.55);
-    }
-
-    .info-strip-inner {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: space-between;
-    }
-
-    footer {
-      padding: 22px 0 32px;
-      font-size: 11px;
-      color: rgba(245,245,245,0.45);
-    }
-
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .footer-links a {
-      opacity: 0.7;
-    }
-
-    .footer-links a:hover {
-      opacity: 1;
-      color: #ffcc66;
-    }
-
-    /* 반응형 */
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .header-inner {
-        gap: 10px;
-      }
-      nav {
-        display: none; /* 필요하면 모바일 메뉴 구현 */
-      }
-      .hero-title {
-        font-size: 30px;
-      }
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- 헤더 -->
-  <header>
-    <div class="container header-inner">
-      <div class="logo">
-        <div class="logo-mark"></div>
-        피지컬
-      </div>
-      <nav>
-        <a href="#benefits">이벤트</a>
-        <a href="#security">보안·정책</a>
-        <a href="#guide">이용안내</a>
-        <a href="#cs">고객센터</a>
-      </nav>
-      <div class="header-actions">
-        <a href="#login" class="btn btn-outline">로그인</a>
-        <a href="#join" class="btn btn-primary">회원가입</a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- 히어로 -->
-    <section class="hero">
-      <div class="container hero-inner">
-        <div>
-          <div class="hero-kicker">PREMIUM SPORTS & CASINO</div>
-          <h1 class="hero-title">
-            피지컬과 함께하는<br>
-            <span class="accent">하이 퀄리티</span> 실시간 베팅
-          </h1>
-          <p class="hero-subtitle">
-            해외 정식 라이선스를 기반으로 안정적인 입·출금과 실시간 경기 연동을 제공합니다.
-            단 한 번의 접속으로 스포츠, 라이브카지노, 슬롯까지 모두 즐겨보세요.
-          </p>
-
-          <div class="hero-cta">
-            <a href="#join" class="btn btn-primary">지금 바로 가입하기</a>
-            <a href="#benefits" class="btn btn-outline">첫충전 이벤트 보기</a>
-          </div>
-
-          <div class="hero-meta">
-            <span>
-              <span class="hero-meta-dot"></span> 24시 자동 입·출금 시스템
-            </span>
-            <span>분쟁 발생 시 전문 상담원 1:1 응대</span>
-          </div>
-        </div>
-
-        <aside class="hero-card">
-          <div class="hero-card-header">
-            <div class="hero-card-title">실시간 잔액 현황 (Demo)</div>
-            <div class="hero-card-badge">SAFE SYSTEM</div>
-          </div>
-
-          <div class="hero-card-main">
-            <div class="hero-balance-label">회원님 보유 머니</div>
-            <div class="hero-balance-value">
-              1,250,000
-              <span>KRW</span>
-            </div>
-
-            <div class="hero-bar">
-              <div class="hero-bar-fill"></div>
-            </div>
-
-            <div class="hero-card-footer">
-              <span>오늘 누적 출금 <strong>3,500,000원</strong></span>
-              <span>금일 정산까지 약 <strong>12분</strong></span>
-            </div>
-          </div>
-
-          <div style="font-size: 11px; color: rgba(245,245,245,0.6); margin-top: 6px;">
-            실제 게임 서비스가 아닌 데모 화면입니다. 본문 내용은 운영 정책에 따라 변경될 수 있습니다.
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 혜택 섹션 -->
-    <section id="benefits">
-      <div class="container">
-        <h2 class="section-title">피지컬 회원 전용 주요 혜택</h2>
-        <p class="section-subtitle">
-          신규/기존 회원에게 모두 적용되는 기본 프로모션입니다. 단, 세부 조건은 공지사항을 꼭 확인해 주세요.
-        </p>
-
-        <div class="features-grid">
-          <article class="feature-card">
-            <div class="feature-label">WELCOME BONUS</div>
-            <h3 class="feature-title">신규 첫충전 보너스 최대 50%</h3>
-            <p class="feature-body">
-              신규 첫충전 시 최대 50% 추가 지급, 롤링 조건 충족 후 출금 가능하며 세부 조건은 이벤트 페이지를 통해 안내해 드립니다.
-            </p>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-label">DAILY EVENT</div>
-            <h3 class="feature-title">매일 출석·미션 이벤트</h3>
-            <p class="feature-body">
-              매일 출석만으로 포인트 적립, 미션 달성 시 추가 캐시백 및 무료 베팅권을 지급해 드립니다.
-            </p>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-label">VIP PROGRAM</div>
-            <h3 class="feature-title">등급별 캐시백·리베이트</h3>
-            <p class="feature-body">
-              이용량에 따라 자동 승급되는 VIP 등급, 등급별 손실 캐시백과 리베이트 혜택으로 보다 유리한 환경을 제공합니다.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 보안/정책 섹션 -->
-    <section id="security">
-      <div class="container">
-        <h2 class="section-title">안전하고 투명한 운영 정책</h2>
-        <p class="section-subtitle">
-          회원님의 자금과 정보를 최우선으로 보호하며, 모든 게임 결과는 제3자 인증 기관의 검증을 받은 시스템으로 처리됩니다.
-        </p>
-
-        <div class="features-grid">
-          <article class="feature-card">
-            <div class="feature-label">SECURITY</div>
-            <h3 class="feature-title">전 구간 SSL 암호화</h3>
-            <p class="feature-body">
-              로그인, 입출금, 게임 플레이 전 구간 TLS/SSL 암호화를 적용하여 외부에서 내용을 열람할 수 없도록 보호합니다.
-            </p>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-label">FAIR PLAY</div>
-            <h3 class="feature-title">공정한 게임 환경</h3>
-            <p class="feature-body">
-              랜덤 결과 생성기는 정기적으로 테스트를 진행하며, 결과 조작이 불가능한 구조로 운영됩니다.
-            </p>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-label">SUPPORT</div>
-            <h3 class="feature-title">24시간 고객센터 운영</h3>
-            <p class="feature-body">
-              실시간 채팅 및 전용 상담 채널을 통해 언제든지 문의하실 수 있으며, 분쟁 발생 시 내부 규정에 따라 신속하게 처리합니다.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 이용안내/고객센터 -->
-    <section id="guide">
-      <div class="container">
-        <h2 class="section-title">이용 전 꼭 확인해 주세요</h2>
-        <p class="section-subtitle">
-          건전한 레저 문화를 위해 과도한 이용은 자제해 주시기 바라며, 본 서비스는 만 19세 미만 고객님은 이용하실 수 없습니다.
-        </p>
-      </div>
-    </section>
-
-    <section id="cs" class="info-strip">
-      <div class="container info-strip-inner">
-        <div>
-          <strong>고객센터 운영시간</strong><br>
-          연중무휴 24시간 (점검 시간 별도 공지)
-        </div>
-        <div>
-          <strong>실시간 상담</strong><br>
-          라이브 채팅 또는 텔레그램/카카오 채널을 통해 문의해 주세요.
-        </div>
-        <div>
-          <strong>유의사항</strong><br>
-          타인 명의 도용 및 타인의 계좌 이용 시 관련 법령에 따라 제재될 수 있습니다.
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div>© 피지컬. All Rights Reserved.</div>
-      <div class="footer-links">
-        <a href="#terms">이용약관</a>
-        <a href="#privacy">개인정보 처리방침</a>
-        <a href="#policy">운영정책</a>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+/* 기본 배경 / 글자 */
+html,
+body {
+  background: radial-gradient(circle at top, #020617 0, #020012 40%, #000010 100%);
+  color: #e5f3ff;
+}
+
+.bg-root {
+  background: radial-gradient(circle at top, #020617 0, #020012 60%);
+}
+
+/* 네비 통짜 바 */
+.nav-shell {
+  background: linear-gradient(180deg, #020617, #020617);
+  border-bottom: 1px solid rgba(148, 163, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.9);
+}
+
+.brand-text {
+  font-weight: 700;
+  color: #f9fafb !important;
+}
+
+.navbar-item,
+.navbar-link {
+  color: #9ca3ff !important;
+  font-size: 0.9rem;
+}
+
+.navbar-item.is-tab:hover {
+  color: #e5f3ff !important;
+}
+
+/* 상단 Google 버튼 */
+.google-btn {
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #2563eb);
+  color: #020617;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.95rem;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.9);
+}
+
+/* 메인 패널(통짜 카드) */
+.panel-shell {
+  margin-top: 4.5rem;
+  padding: 1.6rem 1.8rem 1.8rem;
+  border-radius: 1.6rem;
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%),
+    #020617;
+  border: 1px solid rgba(79, 70, 229, 0.6);
+  box-shadow: 0 25px 45px rgba(15, 23, 42, 0.95);
+}
+
+/* 패널 상단 작은 헤더 */
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.4rem;
+}
+
+.win-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-right: 0.35rem;
+}
+.win-dots span:nth-child(1) { background: #f97373; }
+.win-dots span:nth-child(2) { background: #facc15; }
+.win-dots span:nth-child(3) { background: #22c55e; }
+
+.panel-header-label {
+  font-size: 0.8rem;
+  color: #9ca3ff;
+}
+
+/* 타이틀 / 서브텍스트 */
+.main-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f9fafb;
+  line-height: 1.3;
+}
+.main-title .accent {
+  color: #6ee7b7;
+}
+.main-subtitle {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #a5b4fc;
+}
+
+/* 라이선스 카드 */
+.license-card {
+  margin-top: 1.8rem;
+  padding: 1.4rem 1.5rem 1.6rem;
+  border-radius: 1.5rem;
+  background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.55), #020617);
+  border: 1px solid rgba(129, 140, 248, 0.7);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.9);
+}
+
+.license-title {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.license-desc {
+  font-size: 0.8rem;
+  color: #c7d2fe;
+  margin-bottom: 0.9rem;
+}
+
+.license-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.license-input-wrap {
+  flex: 1;
+  background: #020617;
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid rgba(30, 64, 175, 0.9);
+}
+
+.license-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #e5f3ff;
+  font-size: 0.82rem;
+}
+
+.license-btn {
+  min-width: 70px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 30%, #bfdbfe, #1d4ed8);
+  color: #020617;
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.9);
+}
+
+.license-hint {
+  font-size: 0.75rem;
+  color: #9ca3ff;
+  margin-top: 0.15rem;
+  margin-bottom: 0.55rem;
+}
+
+.license-link {
+  font-size: 0.78rem;
+  color: #6ee7b7;
+  text-decoration: underline;
+}
+
+/* 오른쪽 이미지 카드 */
+.img-card {
+  border-radius: 1.5rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(37, 99, 235, 0.9);
+  background: #020617;
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.9);
+}
+
+.img-inner {
+  border-radius: 1.2rem;
+  overflow: hidden;
+  height: 260px;
+  background: #020617;
+}
+
+.img-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 아래 About 통짜 박스 */
+.about-shell {
+  margin-top: 1.4rem;
+  padding: 1rem 1.6rem 1.2rem;
+  border-radius: 1.5rem;
+  background: #020617;
+  border: 1px solid rgba(55, 65, 194, 0.9);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.9);
+}
+
+.about-title {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.about-text {
+  font-size: 0.8rem;
+  color: #c7d2fe;
+}
+
+/* 푸터 */
+.footer-lite {
+  border: 0;
+  padding-top: 1.2rem;
+}
+.footer-text {
+  font-size: 0.75rem;
+  color: #9ca3ff;
+}
+
+/* Back to top */
+#backtotop {
+  position: fixed;
+  bottom: 1.8rem;
+  right: 1.6rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #e5f3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.9);
+}
+#backtotop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .panel-shell {
+    padding: 1.4rem 1.3rem 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .panel-main {
+    margin-top: 0.6rem;
+  }
+  .img-inner {
+    height: 200px;
+  }
+}
