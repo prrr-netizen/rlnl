@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// jQuery 버전 토글 (기존 템플릿 호환용)
+// jQuery 버전 토글 (Bulma 호환용)
 $(document).ready(function () {
   $(".navbar-burger").click(function () {
     $(".navbar-burger").toggleClass("is-active");
