@@ -31,7 +31,7 @@ body {
   color: #e5f3ff !important;
 }
 
-/* 스크롤 시 색 전환용(선택 사항) */
+/* 스크롤 시 색 전환용 */
 .nav-w {
   background: #f9fafb !important;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.3);
