@@ -366,7 +366,7 @@
       cursor: pointer;
     }
 
-    /* 팝업 오버레이 (3칸 + 24시간 다시 보지 않기) */
+    /* 팝업 오버레이 (카드 3개 세로 + 24시간 다시 보지 않기) */
 
     .popup-backdrop {
       position: fixed;
@@ -380,7 +380,7 @@
 
     .popup {
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
       padding: 20px 18px 18px;
       border-radius: 16px;
       background: #020617;
@@ -397,28 +397,28 @@
       text-align: left;
     }
 
-    .popup-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .popup-column {
+      display: flex;
+      flex-direction: column;
       gap: 8px;
       margin-bottom: 10px;
     }
 
     .popup-item {
-      padding: 8px 8px;
+      padding: 10px 10px;
       border-radius: 10px;
       background: rgba(15, 23, 42, 0.95);
       border: 1px solid rgba(148, 163, 184, 0.5);
     }
 
     .popup-item h3 {
-      font-size: 0.82rem;
+      font-size: 0.86rem;
       font-weight: 700;
       margin-bottom: 4px;
     }
 
     .popup-item p {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: #d1d5db;
       line-height: 1.5;
     }
@@ -470,10 +470,6 @@
 
       .hero-title {
         font-size: 1.18rem;
-      }
-
-      .popup-grid {
-        grid-template-columns: minmax(0, 1fr);
       }
     }
   </style>
@@ -631,12 +627,12 @@
       </div>
     </section>
 
-    <!-- 팝업 오버레이 (3칸 + 24시간 다시 보지 않기) -->
+    <!-- 팝업 오버레이 (세로 카드 3개 + 24시간 다시 보지 않기) -->
     <div class="popup-backdrop" id="popup-backdrop">
       <div class="popup">
         <h2 class="popup-title">rlnl GAME HUB 안내</h2>
 
-        <div class="popup-grid">
+        <div class="popup-column">
           <div class="popup-item">
             <h3>개발 중 기능</h3>
             <p>
@@ -706,7 +702,7 @@
       setInterval(tick, 5000);
     })();
 
-    // 24시간 동안 다시 보지 않기 팝업
+    // 24시간 동안 다시 보지 않기 팝업 + 버튼 클릭 시 동작
     (function () {
       const backdrop = document.getElementById("popup-backdrop");
       const hideCheckbox = document.getElementById("popup-hide-24");
@@ -756,19 +752,26 @@
         }
       }
 
+      // 페이지 들어올 때: 24시간 설정 안 되어 있으면 안내 팝업 자동
       window.addEventListener("load", showPopup);
+
       closeBtn.addEventListener("click", hidePopup);
       backdrop.addEventListener("click", (e) => {
         if (e.target === backdrop) hidePopup();
       });
 
-      // 모든 기능 버튼/링크도 실제 이동 대신 팝업만 다시 띄우게
+      // 버튼/링크 클릭 시:
+      // - 24시간 미설정: 안내 팝업 다시
+      // - 24시간 설정된 상태: 작은 alert로 "현재 구현 중입니다"만
       document.querySelectorAll(".hub-action").forEach((el) => {
         el.addEventListener("click", (e) => {
           e.preventDefault();
-          // 이미 24시간 숨김 체크돼 있으면, 그냥 안 띄워도 되고
-          // 무시하고 다시 보여주고 싶으면 아래 두 줄 유지
-          backdrop.style.display = "flex";
+          const hideUntil = getHideUntil();
+          if (now() <= hideUntil) {
+            alert("24시간 동안 안내 팝업은 표시되지 않습니다.\n현재 기능은 구현 중입니다.");
+          } else {
+            backdrop.style.display = "flex";
+          }
         });
       });
     })();
