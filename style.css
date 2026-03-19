@@ -31,6 +31,15 @@ body {
   color: #e5f3ff !important;
 }
 
+/* 스크롤 시 색 전환용(선택 사항) */
+.nav-w {
+  background: #f9fafb !important;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.3);
+}
+.nav-dark {
+  color: #020617 !important;
+}
+
 /* 상단 Google 버튼 */
 .google-btn {
   background: radial-gradient(circle at 30% 30%, #93c5fd, #2563eb);
