@@ -1,8 +1,12 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+// 정적 파일 서빙 (index.html, style.css, script.js, bulma, 이미지 등)
+app.use(express.static(__dirname));
 
 const licenses = [
   {
@@ -25,7 +29,7 @@ app.post("/licenses/check", (req, res) => {
     return res.status(400).json({ error: "guild_id required" });
   }
 
-  const license = licenses.find(l => l.guildId === guild_id);
+  const license = licenses.find((l) => l.guildId === guild_id);
 
   if (!license) {
     return res.json({
@@ -42,8 +46,9 @@ app.post("/licenses/check", (req, res) => {
   });
 });
 
+// / 에서 index.html 보내기
 app.get("/", (req, res) => {
-  res.send("rlnl license api running");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(PORT, () => {
