@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// 정적 파일 서빙 (index.html, style.css, script.js, bulma, 이미지 등)
+// index.html, style.css, script.js, bulma.min.css, 이미지 등을 그대로 서빙
 app.use(express.static(__dirname));
 
 const licenses = [
@@ -46,7 +46,7 @@ app.post("/licenses/check", (req, res) => {
   });
 });
 
-// / 에서 index.html 보내기
+// 메인 페이지: 카지노 스타일 rlnl 패널
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
