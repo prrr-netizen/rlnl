@@ -1,65 +1,38 @@
-// navbar burger 토글 (DOM API)
-document.addEventListener("DOMContentLoaded", () => {
-  const burger = document.querySelector(".navbar-burger");
-  const menu = document.querySelector("#navbarMenu");
+// 온라인 인원/세션 수 더미 애니메이션
+(function () {
+  const onlineEl = document.getElementById("online-players");
+  const heroOnlineEl = document.getElementById("hero-online-count");
+  const sessionEl = document.getElementById("session-count");
 
-  if (burger && menu) {
-    burger.addEventListener("click", () => {
-      burger.classList.toggle("is-active");
-      menu.classList.toggle("is-active");
-    });
+  if (!onlineEl || !heroOnlineEl || !sessionEl) return;
+
+  let baseOnline = parseInt(onlineEl.textContent || "96", 10);
+  let baseSession = parseInt(sessionEl.textContent || "8", 10);
+
+  function tick() {
+    const onlineDiff = Math.floor(Math.random() * 7) - 3;
+    const sessionDiff = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+
+    baseOnline = Math.max(0, baseOnline + onlineDiff);
+    baseSession = Math.max(1, baseSession + sessionDiff);
+
+    onlineEl.textContent = baseOnline;
+    heroOnlineEl.textContent = baseOnline;
+    sessionEl.textContent = baseSession;
   }
-});
 
-// jQuery 버전 토글 (Bulma 호환용)
-$(document).ready(function () {
-  $(".navbar-burger").click(function () {
-    $(".navbar-burger").toggleClass("is-active");
-    $(".navbar-menu").toggleClass("is-active");
+  setInterval(tick, 5000);
+})();
+
+// 충전 버튼 클릭 파동 효과
+(function () {
+  const chargeBtn = document.getElementById("charge-button");
+  if (!chargeBtn) return;
+
+  chargeBtn.addEventListener("click", function () {
+    chargeBtn.style.transform = "scale(0.96)";
+    setTimeout(() => {
+      chargeBtn.style.transform = "";
+    }, 120);
   });
-});
-
-// navbar on scroll (색 전환)
-$(function () {
-  $(window).on("scroll", function () {
-    if ($(window).scrollTop() > 700) {
-      $("nav").addClass("nav-w");
-      $(".navbar-menu").addClass("nav-w");
-      $(".navbar-item").addClass("nav-dark");
-      $(".navbar-link").addClass("nav-dark");
-      $(".navbar-burger").removeClass("has-text-white");
-      $(".navbar-burger").addClass("has-text-dark");
-    } else {
-      $("nav").removeClass("nav-w");
-      $(".navbar-menu").removeClass("nav-w");
-      $(".navbar-item").removeClass("nav-dark");
-      $(".navbar-link").removeClass("nav-dark");
-      $(".navbar-burger").removeClass("has-text-dark");
-      $(".navbar-burger").addClass("has-text-white");
-    }
-  });
-});
-
-// back to top
-const btn = $("#backtotop");
-
-$(window).scroll(function () {
-  if ($(window).scrollTop() > 100) {
-    btn.addClass("show");
-  } else {
-    btn.removeClass("show");
-  }
-});
-
-btn.on("click", function (e) {
-  e.preventDefault();
-  $("html, body").animate({ scrollTop: 0 }, 300);
-});
-
-// copyright year
-document.addEventListener("DOMContentLoaded", () => {
-  const yearEl = document.getElementById("cp-year");
-  if (yearEl) {
-    yearEl.innerHTML = new Date().getFullYear();
-  }
-});
+})();
