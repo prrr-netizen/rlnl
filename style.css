@@ -19,6 +19,7 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   background:
+    url("relaunch_day.svg") no-repeat right bottom / 320px auto,
     radial-gradient(circle at top left, #0f172a, #020617 55%, #000),
     radial-gradient(circle at bottom right, #020617, #000 60%);
   color: var(--text-main);
@@ -30,13 +31,14 @@ body {
 .page {
   width: 100%;
   max-width: 960px;
-  background: #020617;
+  background: rgba(2, 6, 23, 0.96);
   border-radius: 20px;
   border: 1px solid rgba(148, 163, 184, 0.35);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.9),
     0 0 24px rgba(15, 23, 42, 0.6);
   padding: 20px 20px 24px;
+  backdrop-filter: blur(12px);
 }
 
 /* 상단 헤더 */
@@ -106,7 +108,7 @@ body {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
   gap: 18px;
   align-items: stretch;
   margin-bottom: 22px;
@@ -115,7 +117,7 @@ body {
 .hero-left {
   padding: 14px 16px 16px;
   border-radius: 16px;
-  background: #020617;
+  background: rgba(2, 6, 23, 0.94);
   border: 1px solid rgba(148, 163, 184, 0.4);
 }
 
@@ -196,13 +198,27 @@ body {
 
 .hero-right {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 히어로 오른쪽 일러스트 + 상태 */
+
+.hero-art {
+  height: 120px;
+  border-radius: 14px;
+  background:
+    url("relaunch_day.svg") no-repeat center center / cover,
+    radial-gradient(circle at top left, #1f2937, #020617);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.9);
 }
 
 .status-card {
   width: 100%;
   border-radius: 16px;
   padding: 14px 16px 12px;
-  background: #020617;
+  background: rgba(2, 6, 23, 0.96);
   border: 1px solid rgba(148, 163, 184, 0.5);
 }
 
@@ -268,7 +284,7 @@ body {
 .feature-card {
   padding: 12px 14px;
   border-radius: 14px;
-  background: #020617;
+  background: rgba(2, 6, 23, 0.96);
   border: 1px solid rgba(148, 163, 184, 0.4);
 }
 
@@ -312,7 +328,7 @@ body {
 .footer-block {
   padding: 12px 14px;
   border-radius: 14px;
-  background: #020617;
+  background: rgba(2, 6, 23, 0.96);
   border: 1px solid rgba(148, 163, 184, 0.4);
 }
 
@@ -350,6 +366,16 @@ body {
 /* 반응형 */
 
 @media (max-width: 860px) {
+  body {
+    background:
+      radial-gradient(circle at top left, #0f172a, #020617 55%, #000),
+      radial-gradient(circle at bottom right, #020617, #000 60%);
+  }
+
+  .page {
+    padding: 16px 14px 18px;
+  }
+
   .hero {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -360,10 +386,6 @@ body {
 }
 
 @media (max-width: 640px) {
-  .page {
-    padding: 16px 14px 18px;
-  }
-
   .grid-2 {
     grid-template-columns: minmax(0, 1fr);
   }
