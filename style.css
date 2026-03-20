@@ -4,30 +4,40 @@
 .btn{
   border:none;
   border-radius:999px;
-  padding:7px 13px;
-  font-size:13px;
+  padding:9px 16px;
+  font-size:14px;
   cursor:pointer;
   font-weight:600;
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:6px;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 .btn-primary{
   background:linear-gradient(135deg,#22c55e,#16a34a);
   color:#020617;
+  box-shadow:0 0 18px rgba(34,197,94,.55);
+}
+.btn-primary:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 26px rgba(34,197,94,.75);
 }
 .btn-outline{
   background:transparent;
   color:#e5e7eb;
   border:1px solid rgba(148,163,184,.7);
 }
+.btn-outline:hover{
+  background:rgba(15,23,42,.9);
+}
 
 /* 랜딩 페이지 */
 .landing-body{
   font-family:'Segoe UI',system-ui,sans-serif;
   background:
-    radial-gradient(circle at 0% 0%, #22c55e22, transparent 55%),
-    radial-gradient(circle at 100% 0%, #3b82f622, transparent 55%),
+    radial-gradient(circle at 0% 0%, #22c55e24, transparent 55%),
+    radial-gradient(circle at 100% 0%, #3b82f624, transparent 55%),
     radial-gradient(circle at 50% 100%, #f9731620, transparent 60%),
     #020617;
   color:#e5e7eb;
@@ -46,18 +56,38 @@
 }
 .landing-card{
   width:100%;
-  max-width:640px;
+  max-width:720px;
   background:
-    radial-gradient(circle at top, #1f2937, #020617 65%);
-  border-radius:20px;
-  border:1px solid rgba(148,163,184,.5);
+    radial-gradient(circle at top, #1e293b, #020617 70%);
+  border-radius:22px;
+  border:1px solid rgba(148,163,184,.65);
   box-shadow:
-    0 0 60px rgba(59,130,246,.35),
-    0 24px 40px rgba(0,0,0,.85);
+    0 0 80px rgba(37,99,235,.65),
+    0 26px 46px rgba(0,0,0,.9);
   padding:26px 26px 20px;
   display:flex;
   flex-direction:column;
   gap:18px;
+  position:relative;
+  overflow:hidden;
+}
+.landing-card::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(34,197,94,.16), transparent 55%),
+    radial-gradient(circle at 100% 0%, rgba(59,130,246,.14), transparent 55%);
+  opacity:.9;
+  z-index:-1;
+}
+
+/* 랜딩 헤더 */
+.landing-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
 }
 .landing-logo{
   display:flex;
@@ -65,15 +95,17 @@
   gap:12px;
 }
 .landing-logo-icon{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  background:radial-gradient(circle at 30% 0,#22c55e,#0f172a);
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 30% 0,#22c55e,#0f172a);
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:800;
   font-size:20px;
+  box-shadow:0 0 20px rgba(34,197,94,.65);
 }
 .landing-logo-main{
   font-size:20px;
@@ -81,48 +113,93 @@
   letter-spacing:.04em;
 }
 .landing-logo-sub{
-  font-size:12px;
+  font-size:11px;
   color:#9ca3af;
 }
-.landing-content h1{
+.landing-status{
+  font-size:11px;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(52,211,153,.7);
+  background:rgba(22,163,74,.25);
+  color:#bbf7d0;
+  text-shadow:0 0 6px rgba(34,197,94,.8);
+}
+
+/* 랜딩 메인 */
+.landing-main h1{
   font-size:24px;
   margin-bottom:8px;
 }
-.landing-content p{
+.landing-main p{
   font-size:15px;
   color:#d1d5db;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
-.landing-content ul{
-  list-style:none;
-  font-size:14px;
+.landing-feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+@media(max-width:768px){
+  .landing-feature-grid{
+    grid-template-columns:1fr;
+  }
+}
+.landing-feature{
+  border-radius:14px;
+  border:1px solid rgba(55,65,81,.9);
+  background:rgba(15,23,42,.95);
+  padding:10px 10px 9px;
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+}
+.feature-label{
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#3b82f6,#22c55e);
+  color:#020617;
+  font-size:12px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 14px rgba(59,130,246,.7);
+}
+.landing-feature h2{
+  font-size:13px;
+  margin-bottom:3px;
+}
+.landing-feature p{
+  font-size:12px;
   color:#9ca3af;
+  margin:0;
 }
-.landing-content li::before{
-  content:"• ";
-  color:#22c55e;
-}
+
+/* 랜딩 액션/푸터 */
 .landing-actions{
   display:flex;
   gap:10px;
-  margin-top:6px;
+  margin-top:10px;
 }
 .landing-footer{
-  margin-top:4px;
+  margin-top:6px;
   font-size:11px;
   color:#6b7280;
 }
 
 @media(max-width:640px){
   .landing-card{
-    padding:20px 16px 16px;
+    padding:22px 16px 16px;
   }
   .landing-actions{
     flex-direction:column;
   }
 }
 
-/* 홈 페이지 */
+/* 홈 페이지 공통 */
 body{
   font-family:'Segoe UI',system-ui,sans-serif;
   background:#020617;
