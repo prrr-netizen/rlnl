@@ -1,282 +1,115 @@
-// 간단 상태 (로컬스토리지)
-const STORAGE_KEY = "coreplay_user";
-let state = {
-  nickname: null,
-  points: 0
-};
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>CORE PLAY - 홈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="logo-area">
+      <div class="logo-badge">C</div>
+      <div>
+        <div class="logo-text-main">CORE PLAY</div>
+        <div class="logo-text-sub">포인트 게임 · 이벤트 허브</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="badge-online" id="status-badge">● ONLINE</div>
+      <div class="user-info" id="user-info">
+        비로그인 상태입니다
+      </div>
+      <button class="btn btn-outline" id="logout-btn" style="display:none;">로그아웃</button>
+      <button class="btn btn-outline" onclick="location.href='index.html'">HOME</button>
+    </div>
+  </header>
 
-// 경기/이벤트 더미 데이터
-const matches = [
-  { id:1, type:"football", league:"CORE 리그 · 축구", title:"RED FC vs BLUE FC", time:"오늘 21:00", desc:"득점 예측 미니 이벤트 (포인트 참여)", tag:["축구","라이브예정"], cost:100 },
-  { id:2, type:"esports", league:"e-ARENA · FPS", title:"RIVALS CUP S2", time:"오늘 22:30", desc:"킬 수 맞추기 포인트 챌린지", tag:["FPS","e스포츠"], cost:150 },
-  { id:3, type:"football", league:"CORE 리그 · 축구", title:"CITY SC vs UNITED SC", time:"내일 19:00", desc:"승부 예측 참여형 이벤트", tag:["축구","이벤트"], cost:80 },
-  { id:4, type:"mini", league:"MINI GAME", title:"룰렛 스핀 이벤트", time:"상시 참여 가능", desc:"룰렛 돌려 랜덤 보상 받기", tag:["룰렛","랜덤"], cost:50 },
-  { id:5, type:"esports", league:"e-ARENA · MOBA", title:"CORE 챔피언십", time:"이번 주말", desc:"승리팀 예측 참여형 포인트 이벤트", tag:["MOBA","e스포츠"], cost:120 },
-];
-
-const userInfoEl = document.getElementById("user-info");
-const logoutBtn = document.getElementById("logout-btn");
-const authBox = document.getElementById("auth-box");
-const walletBox = document.getElementById("wallet-box");
-const balanceText = document.getElementById("balance-text");
-const loginBtn = document.getElementById("login-btn");
-const nicknameInput = document.getElementById("nickname-input");
-const chargeBtn = document.getElementById("charge-btn");
-const bonusBtn = document.getElementById("bonus-btn");
-const matchListEl = document.getElementById("match-list");
-const filterBtns = document.querySelectorAll(".filter-btn");
-const toastEl = document.getElementById("toast");
-const gamePlayBtns = document.querySelectorAll(".game-play-btn");
-
-// 로컬 저장 로드
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw){
-      const parsed = JSON.parse(raw);
-      if(parsed.nickname) state.nickname = parsed.nickname;
-      if(typeof parsed.points === "number") state.points = parsed.points;
-    }
-  }catch(e){}
-}
-
-// 저장
-function saveState(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-// UI 반영
-function renderUser(){
-  if(state.nickname){
-    userInfoEl.innerHTML = `안녕하세요, <span>${state.nickname}</span> 님`;
-    authBox.style.display = "flex";
-    authBox.style.visibility = "hidden";
-    authBox.style.height = "0";
-    walletBox.style.display = "flex";
-    logoutBtn.style.display = "inline-flex";
-  }else{
-    userInfoEl.textContent = "비로그인 상태입니다";
-    authBox.style.display = "flex";
-    authBox.style.visibility = "visible";
-    authBox.style.height = "auto";
-    walletBox.style.display = "none";
-    logoutBtn.style.display = "none";
-  }
-  balanceText.textContent = `${state.points}P`;
-}
-
-// 토스트
-function showToast(msg){
-  toastEl.textContent = msg;
-  toastEl.style.display = "block";
-  setTimeout(()=>{toastEl.style.display = "none";}, 1800);
-}
-
-// 경기 렌더
-function renderMatches(filter="all"){
-  matchListEl.innerHTML = "";
-  matches
-    .filter(m => filter==="all" ? true : m.type===filter)
-    .forEach(m => {
-      const div = document.createElement("div");
-      div.className = "match-card";
-      div.innerHTML = `
-        <div class="match-main">
-          <div class="match-league">${m.league}</div>
-          <div class="match-teams">${m.title}</div>
-          <div class="match-time">${m.time}</div>
-          <div class="match-meta">${m.desc}</div>
-        </div>
-        <div class="match-actions">
-          <div class="tag-row">
-            ${m.tag.map(t=>`<span class="tag">${t}</span>`).join("")}
-            <span class="tag">${m.cost}P 필요</span>
+  <div class="main">
+    <!-- 좌측: 로그인/지갑/미니게임 -->
+    <div class="left">
+      <div class="section-card">
+        <div class="section-title">내 계정</div>
+        <div class="section-sub">로그인 후 포인트를 모아 미니게임과 이벤트에 참여해 보세요.</div>
+        <div class="auth-box" id="auth-box">
+          <div class="auth-row">
+            <input type="text" id="nickname-input" placeholder="닉네임 입력">
           </div>
-          <button class="btn-play" data-id="${m.id}">포인트로 참여</button>
+          <div class="auth-row">
+            <button class="btn btn-primary" id="login-btn">로그인 / 간편가입</button>
+          </div>
+          <div class="auth-help">※ 별도 회원가입 없이 닉네임으로 간편 로그인 (로컬 저장)</div>
         </div>
-      `;
-      matchListEl.appendChild(div);
-    });
 
-  document.querySelectorAll(".btn-play").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const id = Number(btn.dataset.id);
-      handleEventJoin(id);
-    });
-  });
-}
+        <div class="wallet" id="wallet-box" style="display:none;">
+          <div class="wallet-left">
+            <div style="font-size:13px;color:#9ca3af;">보유 포인트</div>
+            <div class="wallet-balance" id="balance-text">0P</div>
+          </div>
+          <div class="wallet-right">
+            <button class="btn btn-outline" id="charge-btn">포인트 충전</button>
+            <button class="btn btn-outline" id="bonus-btn">출석 보너스</button>
+          </div>
+        </div>
+      </div>
 
-// 이벤트 참여
-function handleEventJoin(id){
-  if(!state.nickname){
-    showToast("로그인 후 참여할 수 있습니다.");
-    return;
-  }
-  const match = matches.find(m=>m.id===id);
-  if(!match) return;
-  if(state.points < match.cost){
-    showToast(`포인트가 부족합니다. (${match.cost}P 필요)`);
-    return;
-  }
-  state.points -= match.cost;
-  saveState();
-  renderUser();
-  showToast(`${match.title} 이벤트에 참여했습니다. (-${match.cost}P)`);
-}
+      <div class="section-card" style="margin-top:10px;">
+        <div class="section-title">포인트 미니게임</div>
+        <div class="section-sub">포인트를 사용해 간단한 게임에 참여하고, 결과에 따라 포인트를 얻거나 잃을 수 있습니다.</div>
+        <div class="game-grid">
+          <div class="game-card">
+            <div class="game-header">
+              <div>
+                <div class="game-name">숫자 맞추기</div>
+                <div class="game-cost">참여비: 50P · 최대 당첨: 100P</div>
+              </div>
+            </div>
+            <div class="game-desc">1~5 사이 랜덤 숫자를 맞추면 포인트 2배!</div>
+            <div class="game-footer">
+              <span class="game-status">캐주얼 · 운빨</span>
+              <button class="btn btn-primary game-play-btn" data-game="guess">플레이</button>
+            </div>
+          </div>
 
-// 로그인
-loginBtn.addEventListener("click",()=>{
-  const nick = nicknameInput.value.trim();
-  if(!nick){
-    showToast("닉네임을 입력해 주세요.");
-    return;
-  }
-  state.nickname = nick;
-  if(state.points === 0){
-    state.points = 500; // 최초 로그인 보너스
-    showToast("첫 로그인 보너스 500P가 지급되었습니다.");
-  }
-  saveState();
-  renderUser();
-});
+          <div class="game-card">
+            <div class="game-header">
+              <div>
+                <div class="game-name">하이로우 카드</div>
+                <div class="game-cost">참여비: 100P · 최대 당첨: 160P</div>
+              </div>
+            </div>
+            <div class="game-desc">임의 카드보다 높을지/낮을지 선택하는 간단한 게임.</div>
+            <div class="game-footer">
+              <span class="game-status">카드 · 심플</span>
+              <button class="btn btn-primary game-play-btn" data-game="highlow">플레이</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-// 로그아웃
-logoutBtn.addEventListener("click",()=>{
-  state.nickname = null;
-  saveState();
-  renderUser();
-  showToast("로그아웃되었습니다.");
-});
+    <!-- 우측: 경기/이벤트 리스트 -->
+    <div class="right">
+      <div class="section-card">
+        <div class="section-title">이벤트 & 매치 리스트</div>
+        <div class="section-sub">실제 베팅 기능은 없으며, 포인트로 참여하는 이벤트/게임 목록입니다.</div>
 
-// 충전(데모, 상한 100,000P)
-chargeBtn.addEventListener("click",()=>{
-  if(!state.nickname){
-    showToast("로그인 후 이용해 주세요.");
-    return;
-  }
-  const input = prompt("충전할 포인트를 입력해 주세요. (1 ~ 100000)");
-  if(!input) return;
-  const amount = Number(input);
-  if(!Number.isFinite(amount) || amount<=0){
-    showToast("올바른 숫자를 입력해 주세요.");
-    return;
-  }
-  if(amount > 100000){
-    showToast("한 번에 최대 100,000P까지만 충전할 수 있습니다.");
-    return;
-  }
-  state.points += amount;
-  saveState();
-  renderUser();
-  showToast(`${amount}P가 충전되었습니다.`);
-});
+        <div class="filter-tabs">
+          <button class="filter-btn active" data-filter="all">전체</button>
+          <button class="filter-btn" data-filter="football">축구 테마</button>
+          <button class="filter-btn" data-filter="esports">e스포츠</button>
+          <button class="filter-btn" data-filter="mini">미니게임</button>
+        </div>
 
-// 출석 보너스
-bonusBtn.addEventListener("click",()=>{
-  if(!state.nickname){
-    showToast("로그인 후 이용해 주세요.");
-    return;
-  }
-  const key = `${STORAGE_KEY}_bonus_date`;
-  const today = new Date().toISOString().slice(0,10);
-  const last = localStorage.getItem(key);
-  if(last === today){
-    showToast("오늘은 이미 출석 보너스를 받았습니다.");
-    return;
-  }
-  localStorage.setItem(key, today);
-  state.points += 200;
-  saveState();
-  renderUser();
-  showToast("출석 보너스 200P가 지급되었습니다.");
-});
+        <div class="match-list" id="match-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-// 미니게임: 숫자 맞추기
-function playGuess(){
-  if(!state.nickname){
-    showToast("로그인 후 이용해 주세요.");
-    return;
-  }
-  const cost = 50;
-  if(state.points < cost){
-    showToast("포인트가 부족합니다. (50P 필요)");
-    return;
-  }
-  const answer = Math.floor(Math.random()*5)+1;
-  const input = prompt("1~5 사이 숫자를 하나 입력하세요.");
-  if(!input) return;
-  const guess = Number(input);
-  state.points -= cost;
-  if(guess === answer){
-    const reward = 100; // 2배 정도
-    state.points += reward;
-    showToast(`정답! +${reward-cost}P (총 ${reward}P 획득)`);
-  }else{
-    showToast(`꽝! 정답은 ${answer}였습니다. (-${cost}P)`);
-  }
-  saveState();
-  renderUser();
-}
+<div class="toast" id="toast"></div>
 
-// 미니게임: 하이로우
-function playHighLow(){
-  if(!state.nickname){
-    showToast("로그인 후 이용해 주세요.");
-    return;
-  }
-  const cost = 100;
-  if(state.points < cost){
-    showToast("포인트가 부족합니다. (100P 필요)");
-    return;
-  }
-  const base = Math.floor(Math.random()*10)+1;
-  const choice = prompt(`기준 숫자: ${base}\n'높음' 또는 '낮음'을 입력하세요.`);
-  if(!choice) return;
-  const c = choice.trim();
-  const next = Math.floor(Math.random()*10)+1;
-  state.points -= cost;
-  let win = false;
-  if(c === "높음" && next > base) win = true;
-  if(c === "낮음" && next < base) win = true;
-
-  if(win){
-    const reward = 160; // 1.6배
-    state.points += reward;
-    showToast(`성공! 새 숫자: ${next} ( +${reward-cost}P )`);
-  }else{
-    showToast(`실패! 새 숫자: ${next} (-${cost}P)`);
-  }
-  saveState();
-  renderUser();
-}
-
-// 미니게임 버튼 바인딩
-gamePlayBtns.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const game = btn.dataset.game;
-    if(game==="guess") playGuess();
-    if(game==="highlow") playHighLow();
-  });
-});
-
-// 필터 버튼
-filterBtns.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    filterBtns.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    const filter = btn.dataset.filter;
-    renderMatches(filter);
-  });
-});
-
-// 상태/시간 뱃지
-setInterval(()=>{
-  const now = new Date();
-  const t = now.toTimeString().slice(0,8);
-  document.getElementById("status-badge").textContent = `● ONLINE | ${t}`;
-},1000);
-
-// 초기화
-loadState();
-renderUser();
-renderMatches("all");
+<script src="script.js"></script>
+</body>
+</html>
