@@ -1,13 +1,13 @@
 {
-  "name": "rlnl-game-hub-oauth",
+  "name": "RLNL-coreplay-oauth",
   "version": "1.0.0",
-  "description": "rlnl 디스코드 연동용 OAuth2 링크/인증 패널 (백엔드 서버)",
+  "description": "CORE PLAY / RLNL 포인트 게임 허브 디스코드 OAuth2 연동 백엔드 서버",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development node index.js"
   },
-  "author": "rlnl",
+  "author": "RLNL",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.7.7",
