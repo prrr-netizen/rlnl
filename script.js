@@ -1,11 +1,6 @@
-// 간단 상태 (로컬스토리지)
 const STORAGE_KEY = "coreplay_user";
-let state = {
-  nickname: null,
-  points: 0
-};
+let state = { nickname: null, points: 0 };
 
-// 경기/이벤트 더미 데이터
 const matches = [
   { id:1, type:"football", league:"CORE 리그 · 축구", title:"RED FC vs BLUE FC", time:"오늘 21:00", desc:"득점 예측 미니 이벤트 (포인트 참여)", tag:["축구","라이브예정"], cost:100 },
   { id:2, type:"esports", league:"e-ARENA · FPS", title:"RIVALS CUP S2", time:"오늘 22:30", desc:"킬 수 맞추기 포인트 챌린지", tag:["FPS","e스포츠"], cost:150 },
@@ -14,21 +9,20 @@ const matches = [
   { id:5, type:"esports", league:"e-ARENA · MOBA", title:"CORE 챔피언십", time:"이번 주말", desc:"승리팀 예측 참여형 포인트 이벤트", tag:["MOBA","e스포츠"], cost:120 },
 ];
 
-const userInfoEl = document.getElementById("user-info");
-const logoutBtn = document.getElementById("logout-btn");
-const authBox = document.getElementById("auth-box");
-const walletBox = document.getElementById("wallet-box");
-const balanceText = document.getElementById("balance-text");
-const loginBtn = document.getElementById("login-btn");
-const nicknameInput = document.getElementById("nickname-input");
-const chargeBtn = document.getElementById("charge-btn");
-const bonusBtn = document.getElementById("bonus-btn");
-const matchListEl = document.getElementById("match-list");
-const filterBtns = document.querySelectorAll(".filter-btn");
-const toastEl = document.getElementById("toast");
+const userInfoEl   = document.getElementById("user-info");
+const logoutBtn    = document.getElementById("logout-btn");
+const authBox      = document.getElementById("auth-box");
+const walletBox    = document.getElementById("wallet-box");
+const balanceText  = document.getElementById("balance-text");
+const loginBtn     = document.getElementById("login-btn");
+const nicknameInput= document.getElementById("nickname-input");
+const chargeBtn    = document.getElementById("charge-btn");
+const bonusBtn     = document.getElementById("bonus-btn");
+const matchListEl  = document.getElementById("match-list");
+const filterBtns   = document.querySelectorAll(".filter-btn");
+const toastEl      = document.getElementById("toast");
 const gamePlayBtns = document.querySelectorAll(".game-play-btn");
 
-// 로컬 저장 로드
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -40,12 +34,10 @@ function loadState(){
   }catch(e){}
 }
 
-// 저장
 function saveState(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-// UI 반영
 function renderUser(){
   if(state.nickname){
     userInfoEl.innerHTML = `안녕하세요, <span>${state.nickname}</span> 님`;
@@ -65,14 +57,12 @@ function renderUser(){
   balanceText.textContent = `${state.points}P`;
 }
 
-// 토스트
 function showToast(msg){
   toastEl.textContent = msg;
   toastEl.style.display = "block";
   setTimeout(()=>{toastEl.style.display = "none";}, 1800);
 }
 
-// 경기 렌더
 function renderMatches(filter="all"){
   matchListEl.innerHTML = "";
   matches
@@ -106,7 +96,6 @@ function renderMatches(filter="all"){
   });
 }
 
-// 이벤트 참여
 function handleEventJoin(id){
   if(!state.nickname){
     showToast("로그인 후 참여할 수 있습니다.");
@@ -124,7 +113,6 @@ function handleEventJoin(id){
   showToast(`${match.title} 이벤트에 참여했습니다. (-${match.cost}P)`);
 }
 
-// 로그인
 loginBtn.addEventListener("click",()=>{
   const nick = nicknameInput.value.trim();
   if(!nick){
@@ -133,14 +121,13 @@ loginBtn.addEventListener("click",()=>{
   }
   state.nickname = nick;
   if(state.points === 0){
-    state.points = 500; // 최초 로그인 보너스
+    state.points = 500;
     showToast("첫 로그인 보너스 500P가 지급되었습니다.");
   }
   saveState();
   renderUser();
 });
 
-// 로그아웃
 logoutBtn.addEventListener("click",()=>{
   state.nickname = null;
   saveState();
@@ -148,17 +135,20 @@ logoutBtn.addEventListener("click",()=>{
   showToast("로그아웃되었습니다.");
 });
 
-// 충전(데모)
 chargeBtn.addEventListener("click",()=>{
   if(!state.nickname){
     showToast("로그인 후 이용해 주세요.");
     return;
   }
-  const input = prompt("충전할 포인트를 입력해 주세요. (예: 1000)");
+  const input = prompt("충전할 포인트를 입력해 주세요. (1 ~ 100000)");
   if(!input) return;
   const amount = Number(input);
   if(!Number.isFinite(amount) || amount<=0){
     showToast("올바른 숫자를 입력해 주세요.");
+    return;
+  }
+  if(amount > 100000){
+    showToast("한 번에 최대 100,000P까지만 충전할 수 있습니다.");
     return;
   }
   state.points += amount;
@@ -167,7 +157,6 @@ chargeBtn.addEventListener("click",()=>{
   showToast(`${amount}P가 충전되었습니다.`);
 });
 
-// 출석 보너스
 bonusBtn.addEventListener("click",()=>{
   if(!state.nickname){
     showToast("로그인 후 이용해 주세요.");
@@ -187,7 +176,6 @@ bonusBtn.addEventListener("click",()=>{
   showToast("출석 보너스 200P가 지급되었습니다.");
 });
 
-// 미니게임: 숫자 맞추기
 function playGuess(){
   if(!state.nickname){
     showToast("로그인 후 이용해 주세요.");
@@ -204,7 +192,7 @@ function playGuess(){
   const guess = Number(input);
   state.points -= cost;
   if(guess === answer){
-    const reward = 150;
+    const reward = 100;
     state.points += reward;
     showToast(`정답! +${reward-cost}P (총 ${reward}P 획득)`);
   }else{
@@ -214,7 +202,6 @@ function playGuess(){
   renderUser();
 }
 
-// 미니게임: 하이로우
 function playHighLow(){
   if(!state.nickname){
     showToast("로그인 후 이용해 주세요.");
@@ -236,7 +223,7 @@ function playHighLow(){
   if(c === "낮음" && next < base) win = true;
 
   if(win){
-    const reward = 200;
+    const reward = 160;
     state.points += reward;
     showToast(`성공! 새 숫자: ${next} ( +${reward-cost}P )`);
   }else{
@@ -246,7 +233,6 @@ function playHighLow(){
   renderUser();
 }
 
-// 미니게임 버튼 바인딩
 gamePlayBtns.forEach(btn=>{
   btn.addEventListener("click",()=>{
     const game = btn.dataset.game;
@@ -255,7 +241,6 @@ gamePlayBtns.forEach(btn=>{
   });
 });
 
-// 필터 버튼
 filterBtns.forEach(btn=>{
   btn.addEventListener("click",()=>{
     filterBtns.forEach(b=>b.classList.remove("active"));
@@ -265,14 +250,12 @@ filterBtns.forEach(btn=>{
   });
 });
 
-// 상태/시간 뱃지
 setInterval(()=>{
   const now = new Date();
   const t = now.toTimeString().slice(0,8);
   document.getElementById("status-badge").textContent = `● ONLINE | ${t}`;
 },1000);
 
-// 초기화
 loadState();
 renderUser();
 renderMatches("all");
