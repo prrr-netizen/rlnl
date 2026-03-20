@@ -1,5 +1,5 @@
 const STORAGE_KEY = "coreplay_user";
-let state = { nickname: null, points: 0, lastBonusDate: null };
+let state = { nickname: null, points: 0, lastBonusDate: null, discordUser:null };
 
 const matches = [
   { id:1, type:"football", league:"CORE 리그 · 축구", title:"RED FC vs BLUE FC", time:"오늘 21:00", desc:"득점 예측 미니 이벤트 (포인트 참여)", tag:["축구","라이브예정"], cost:100 },
@@ -7,21 +7,30 @@ const matches = [
   { id:3, type:"football", league:"CORE 리그 · 축구", title:"CITY SC vs UNITED SC", time:"내일 19:00", desc:"승부 예측 참여형 이벤트", tag:["축구","이벤트"], cost:80 },
   { id:4, type:"mini", league:"MINI GAME", title:"룰렛 스핀 이벤트", time:"상시 참여 가능", desc:"룰렛 돌려 랜덤 보상 받기", tag:["룰렛","랜덤"], cost:50 },
   { id:5, type:"esports", league:"e-ARENA · MOBA", title:"CORE 챔피언십", time:"이번 주말", desc:"승리팀 예측 참여형 포인트 이벤트", tag:["MOBA","e스포츠"], cost:120 },
-};
+];
 
-const userInfoEl   = document.getElementById("user-info");
-const logoutBtn    = document.getElementById("logout-btn");
-const authBox      = document.getElementById("auth-box");
-const walletBox    = document.getElementById("wallet-box");
-const balanceText  = document.getElementById("balance-text");
-const loginBtn     = document.getElementById("login-btn");
-const nicknameInput= document.getElementById("nickname-input");
-const chargeBtn    = document.getElementById("charge-btn");
-const bonusBtn     = document.getElementById("bonus-btn");
-const matchListEl  = document.getElementById("match-list");
-const filterBtns   = document.querySelectorAll(".filter-btn");
-const toastEl      = document.getElementById("toast");
-const gamePlayBtns = document.querySelectorAll(".game-play-btn");
+const userInfoEl      = document.getElementById("user-info");
+const logoutBtn       = document.getElementById("logout-btn");
+const authBox         = document.getElementById("auth-box");
+const walletBox       = document.getElementById("wallet-box");
+const balanceText     = document.getElementById("balance-text");
+const loginBtn        = document.getElementById("login-btn");
+const nicknameInput   = document.getElementById("nickname-input");
+const chargeBtn       = document.getElementById("charge-btn");
+const bonusBtn        = document.getElementById("bonus-btn");
+const matchListEl     = document.getElementById("match-list");
+const filterBtns      = document.querySelectorAll(".filter-btn");
+const toastEl         = document.getElementById("toast");
+const gamePlayBtns    = document.querySelectorAll(".game-play-btn");
+
+// 충전 모달 요소 (있으면 작동, 없으면 자동 무시)
+const modalBackdrop      = document.getElementById("charge-modal-backdrop");
+const modalCloseBtn      = document.getElementById("charge-modal-close");
+const modalOkBtn         = document.getElementById("charge-modal-ok");
+const modalDiscordBtn    = document.getElementById("charge-modal-discord-btn");
+const modalDiscordUserEl = document.getElementById("modal-discord-user");
+const modalNicknameEl    = document.getElementById("modal-nickname");
+const modalPointsEl      = document.getElementById("modal-points");
 
 // ===== 상태 로드/저장 =====
 function loadState(){
@@ -32,6 +41,7 @@ function loadState(){
       if(parsed.nickname) state.nickname = parsed.nickname;
       if(typeof parsed.points === "number") state.points = parsed.points;
       if(parsed.lastBonusDate) state.lastBonusDate = parsed.lastBonusDate;
+      if(parsed.discordUser) state.discordUser = parsed.discordUser;
     }
   }catch(e){}
 }
@@ -58,6 +68,8 @@ function renderUser(){
     logoutBtn.style.display = "none";
   }
   balanceText.textContent = `${state.points}P`;
+  if(modalPointsEl) modalPointsEl.textContent = `${state.points}P`;
+  if(modalNicknameEl) modalNicknameEl.textContent = state.nickname || "-";
 }
 
 function showToast(msg){
@@ -94,6 +106,8 @@ function checkCooldown(key){
 
 // ===== 매치 리스트 =====
 function renderMatches(filter="all"){
+  if(!matchListEl) return; // 홈에서 안 쓰면 무시
+
   matchListEl.innerHTML = "";
   matches
     .filter(m => filter==="all" ? true : m.type===filter)
@@ -178,6 +192,16 @@ chargeBtn.addEventListener("click",()=>{
     showToast("로그인 후 이용해 주세요.");
     return;
   }
+
+  // 모달 있으면 모달로, 없으면 prompt로
+  if(modalBackdrop){
+    if(modalDiscordUserEl) modalDiscordUserEl.textContent = state.discordUser || "연동되지 않음";
+    if(modalNicknameEl)    modalNicknameEl.textContent    = state.nickname || "-";
+    if(modalPointsEl)      modalPointsEl.textContent      = `${state.points}P`;
+    modalBackdrop.classList.add("show");
+    return;
+  }
+
   const input = prompt("충전할 포인트를 입력해 주세요. (1 ~ 50000)");
   if(!input) return;
   const amount = Number(input);
@@ -194,6 +218,23 @@ chargeBtn.addEventListener("click",()=>{
   renderUser();
   showToast(`${amount}P가 충전되었습니다.`);
 });
+
+// ===== 충전 모달 제어 =====
+if(modalBackdrop){
+  function closeChargeModal(){
+    modalBackdrop.classList.remove("show");
+  }
+  if(modalCloseBtn) modalCloseBtn.addEventListener("click", closeChargeModal);
+  if(modalOkBtn)    modalOkBtn.addEventListener("click", closeChargeModal);
+  modalBackdrop.addEventListener("click",(e)=>{
+    if(e.target === modalBackdrop) closeChargeModal();
+  });
+  if(modalDiscordBtn){
+    modalDiscordBtn.addEventListener("click",()=>{
+      alert("여기 디스코드 초대/봇 링크 연동 예정.");
+    });
+  }
+}
 
 // ===== 출석 보너스 =====
 bonusBtn.addEventListener("click",()=>{
@@ -278,15 +319,16 @@ function playHighLow(){
   renderUser();
 }
 
-// ===== 버튼 바인딩 =====
+// ===== 미니게임 버튼 바인딩 =====
 gamePlayBtns.forEach(btn=>{
   btn.addEventListener("click",()=>{
     const game = btn.dataset.game;
-    if(game==="guess") playGuess();
+    if(game==="guess")   playGuess();
     if(game==="highlow") playHighLow();
   });
 });
 
+// ===== 필터 탭 바인딩 =====
 filterBtns.forEach(btn=>{
   btn.addEventListener("click",()=>{
     filterBtns.forEach(b=>b.classList.remove("active"));
@@ -300,7 +342,8 @@ filterBtns.forEach(btn=>{
 setInterval(()=>{
   const now = new Date();
   const t = now.toTimeString().slice(0,8);
-  document.getElementById("status-badge").textContent = `● ONLINE | ${t}`;
+  const badge = document.getElementById("status-badge");
+  if(badge) badge.textContent = `● ONLINE | ${t}`;
 },1000);
 
 // 초기화
