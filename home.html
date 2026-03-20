@@ -5,28 +5,15 @@
   <title>PLAY HUB - 실시간 미니게임 룸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- 접속 코드 잠금 -->
+  <!-- 접속 코드 잠금: 매번 페이지 들어올 때마다 코드 입력해야 통과 -->
   <script>
-    // 디코에서 승인된 사람한테만 알려줄 코드
-    const PASS = "A8253";
+    const PASS = "rlnl8253";  // 디코에서 승인된 사람한테만 알려줄 코드
 
-    try {
-      const saved = sessionStorage.getItem("playhub_pass_ok");
-      if (saved !== PASS) {
-        const input = prompt("접속 코드(승인 코드)를 입력하세요.");
-        if (input !== PASS) {
-          alert("승인되지 않은 접근입니다. 디스코드로 문의해 주세요.");
-          window.location.href = "index.html";
-        } else {
-          sessionStorage.setItem("playhub_pass_ok", PASS);
-        }
-      }
-    } catch(e) {
-      const input = prompt("접속 코드(승인 코드)를 입력하세요.");
-      if (input !== PASS) {
-        alert("승인되지 않은 접근입니다. 디스코드로 문의해 주세요.");
-        window.location.href = "index.html";
-      }
+    const input = prompt("접속 코드(승인 코드)를 입력하세요.");
+    if (input !== PASS) {
+      alert("승인되지 않은 접근입니다. 디스코드로 문의해 주세요.");
+      // index.html 있으면 거기로, 없으면 루트로
+      window.location.href = "index.html";
     }
   </script>
 
