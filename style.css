@@ -25,7 +25,11 @@
 /* 랜딩 페이지 */
 .landing-body{
   font-family:'Segoe UI',system-ui,sans-serif;
-  background:#020617;
+  background:
+    radial-gradient(circle at 0% 0%, #22c55e22, transparent 55%),
+    radial-gradient(circle at 100% 0%, #3b82f622, transparent 55%),
+    radial-gradient(circle at 50% 100%, #f9731620, transparent 60%),
+    #020617;
   color:#e5e7eb;
   min-height:100vh;
   display:flex;
@@ -38,14 +42,19 @@
   max-width:960px;
   display:flex;
   justify-content:center;
+  align-items:center;
 }
 .landing-card{
   width:100%;
-  background:radial-gradient(circle at top,#0f172a,#020617);
+  max-width:640px;
+  background:
+    radial-gradient(circle at top, #1f2937, #020617 65%);
   border-radius:20px;
-  border:1px solid rgba(148,163,184,.4);
-  box-shadow:0 20px 40px rgba(15,23,42,.8);
-  padding:24px 24px 20px;
+  border:1px solid rgba(148,163,184,.5);
+  box-shadow:
+    0 0 60px rgba(59,130,246,.35),
+    0 24px 40px rgba(0,0,0,.85);
+  padding:26px 26px 20px;
   display:flex;
   flex-direction:column;
   gap:18px;
@@ -76,17 +85,17 @@
   color:#9ca3af;
 }
 .landing-content h1{
-  font-size:22px;
-  margin-bottom:6px;
+  font-size:24px;
+  margin-bottom:8px;
 }
 .landing-content p{
-  font-size:14px;
+  font-size:15px;
   color:#d1d5db;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .landing-content ul{
   list-style:none;
-  font-size:13px;
+  font-size:14px;
   color:#9ca3af;
 }
 .landing-content li::before{
