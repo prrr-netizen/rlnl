@@ -1,75 +1,74 @@
-<!-- 3. 포인트 플랜 / 미니게임 통짜 -->
-<div class="section-card">
-  <div class="section-title">포인트 플랜 / 미니게임</div>
-  <div class="section-sub">플랜 카드들을 한 줄씩 세로로 나열한 영역입니다.</div>
+/* 포인트 플랜 / 미니게임 카드 영역 */
+.plan-list{
+  display:flex;
+  flex-direction:column;     /* 카드들을 세로로 한 줄씩 */
+  gap:12px;                  /* 카드 간 간격 */
+}
 
-  <div class="plan-list">
-    <!-- 카드 1 : 숫자 맞추기 -->
-    <div class="plan-card">
-      <div class="plan-header">
-        <div class="plan-title-wrap">
-          <div class="plan-title">숫자 맞추기</div>
-          <div class="plan-tag">미니게임</div>
-        </div>
-        <button class="btn btn-primary" data-game="guess">플레이</button>
-      </div>
-      <div class="plan-desc">
-        1~5 랜덤 숫자를 맞추면 2배 지급되는 기본 포인트 게임.
-      </div>
-      <div class="plan-footer">
-        <span class="plan-meta">참여비 50P · 성공 시 100P</span>
-      </div>
-    </div>
+.plan-card{
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.7);
+  background:
+    radial-gradient(circle at 0 0,#22c55e22,transparent 60%),
+    rgba(15,23,42,.98);
+  padding:14px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:14px;
+  box-shadow:0 0 18px rgba(15,23,42,.9);
+}
 
-    <!-- 카드 2 : 하이로우 카드 -->
-    <div class="plan-card">
-      <div class="plan-header">
-        <div class="plan-title-wrap">
-          <div class="plan-title">하이로우 카드</div>
-          <div class="plan-tag">카드 게임</div>
-        </div>
-        <button class="btn btn-primary" data-game="highlow">플레이</button>
-      </div>
-      <div class="plan-desc">
-        기준 숫자보다 높음/낮음만 고르는 심플 포인트 카드 게임.
-      </div>
-      <div class="plan-footer">
-        <span class="plan-meta">참여비 100P · 성공 시 160P</span>
-      </div>
-    </div>
+/* 카드 상단: 제목 + 태그 + 버튼 */
+.plan-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
 
-    <!-- 카드 3 : 실시간 미션 슬롯 -->
-    <div class="plan-card">
-      <div class="plan-header">
-        <div class="plan-title-wrap">
-          <div class="plan-title">실시간 미션 슬롯</div>
-          <div class="plan-tag">실시간</div>
-        </div>
-        <button class="btn btn-outline" disabled>준비중</button>
-      </div>
-      <div class="plan-desc">
-        실시간 룸에서 특정 구간에만 열리는 미션을 가정한 슬롯.
-      </div>
-      <div class="plan-footer">
-        <span class="plan-meta">참여비 30P · 성공 시 60P</span>
-      </div>
-    </div>
+.plan-title-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    <!-- 카드 4 : 랜덤 리액션 보상 -->
-    <div class="plan-card">
-      <div class="plan-header">
-        <div class="plan-title-wrap">
-          <div class="plan-title">랜덤 리액션 보상</div>
-          <div class="plan-tag">연동</div>
-        </div>
-        <button class="btn btn-outline" disabled>준비중</button>
-      </div>
-      <div class="plan-desc">
-        리액션/이모지 응답에 따라 포인트 드랍이 발생하는 연동 영역.
-      </div>
-      <div class="plan-footer">
-        <span class="plan-meta">참여비 20P · 성공 시 80P</span>
-      </div>
-    </div>
-  </div>
-</div>
+.plan-title{
+  font-size:15px;
+  font-weight:700;
+}
+
+.plan-tag{
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.8);
+  color:#e5e7eb;
+  background:rgba(15,23,42,.95);
+}
+
+/* 설명 + 하단 메타 */
+.plan-desc{
+  font-size:13px;
+  color:#cbd5f5;
+}
+
+.plan-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:2px;
+  font-size:12px;
+  color:#9ca3af;
+}
+
+.plan-meta{
+  font-size:12px;
+}
+
+/* 준비중 버튼 비활성 스타일 */
+.plan-card button[disabled]{
+  opacity:.6;
+  cursor:default;
+  box-shadow:none;
+}
