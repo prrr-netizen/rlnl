@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>PLAY HUB - 포인트 플레이 홈</title>
+  <title>PLAY HUB - 실시간 미니게임 룸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -84,7 +84,7 @@
       padding:13px 13px 11px;box-shadow:0 0 24px rgba(15,23,42,.95);
     }
     .section-title{font-size:14px;font-weight:600;margin-bottom:4px;}
-    .section-sub{font-size:12px;color:#9ca3af;margin-bottom:6px;}
+    .section-sub{font-size:12px;color:#9ca3af;margin-bottom:10px;}
 
     .top-account-grid{
       display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
@@ -122,14 +122,28 @@
     }
     .wallet-right{display:flex;gap:6px;}
 
-    .live-main{
-      position:relative;border-radius:18px;overflow:hidden;
-      border:1px solid rgba(55,65,81,.95);background:#020617;min-height:260px;
+    /* 실시간 룸: 카드 크게 2개 */
+    .realtime-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
     }
-    .live-main iframe{
+    @media(max-width:900px){
+      .realtime-grid{grid-template-columns:1fr;}
+    }
+    .live-card{
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(55,65,81,.95);
+      background:#020617;
+      min-height:320px;
+      box-shadow:0 0 24px rgba(15,23,42,.95);
+    }
+    .live-card iframe{
       width:100%;height:100%;display:block;border:none;
     }
-    .video-overlay-top{
+    .live-tag-top{
       position:absolute;top:10px;left:10px;
       display:flex;gap:6px;align-items:center;pointer-events:none;
     }
@@ -139,34 +153,18 @@
     }
     .viewer-pill{
       font-size:11px;padding:4px 8px;border-radius:999px;
-      background:rgba(15,23,42,.85);color:#e5e7eb;border:1px solid rgba(75,85,99,.9);
+      background:rgba(15,23,42,.85);color:#e5e7eb;
+      border:1px solid rgba(75,85,99,.9);
     }
-    .video-overlay-bottom{
+    .live-info-bottom{
       position:absolute;left:0;right:0;bottom:0;
-      padding:10px 12px;
+      padding:8px 10px;
       background:linear-gradient(to top,rgba(15,23,42,.95),transparent);
-      font-size:13px;pointer-events:none;
+      font-size:12px;pointer-events:none;
     }
-    .video-title{font-weight:600;font-size:14px;margin-bottom:2px;}
-    .video-meta{font-size:12px;color:#d1d5db;}
-
-    .plan-list{display:flex;flex-direction:column;gap:12px;}
-    .plan-card{
-      border-radius:16px;border:1px solid rgba(148,163,184,.7);
-      background:radial-gradient(circle at 0 0,#22c55e22,transparent 60%),rgba(15,23,42,.98);
-      padding:14px 14px;display:flex;flex-direction:column;gap:8px;font-size:14px;
-      box-shadow:0 0 18px rgba(15,23,42,.9);
-    }
-    .plan-header{display:flex;justify-content:space-between;align-items:center;gap:10px;}
-    .plan-title-wrap{display:flex;align-items:center;gap:8px;}
-    .plan-title{font-size:15px;font-weight:700;}
-    .plan-tag{
-      font-size:11px;padding:3px 8px;border-radius:999px;
-      border:1px solid rgba(148,163,184,.8);color:#e5e7eb;background:rgba(15,23,42,.95);
-    }
-    .plan-desc{font-size:13px;color:#cbd5f5;}
-    .plan-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2px;font-size:12px;color:#9ca3af;}
-
+    .live-title{font-weight:600;font-size:13px;margin-bottom:2px;}
+    .live-meta{font-size:11px;color:#d1d5db;}
+    
     .toast{
       position:fixed;left:50%;transform:translateX(-50%);bottom:18px;
       background:#020617;border-radius:999px;border:1px solid rgba(55,65,81,1);
@@ -207,7 +205,7 @@
       <div class="logo-badge">P</div>
       <div>
         <div class="logo-text-main">PLAY HUB</div>
-        <div class="logo-text-sub">24/7 뮤직 라이브 · 포인트 플랜</div>
+        <div class="logo-text-sub">실시간 미니게임 룸</div>
       </div>
     </div>
     <div class="header-right">
@@ -257,76 +255,55 @@
       </div>
     </div>
 
-    <!-- 실시간 룸: 유튜브 24/7 음악 라이브 -->
+    <!-- 실시간 룸: 큰 카드 2개 (외국 미니게임 iframe) -->
     <div class="section-card">
-      <div class="section-title">실시간 룸</div>
-      <div class="section-sub">24/7 음악 라이브와 함께 포인트 미션을 붙이는 영역입니다.</div>
-      <div class="live-main">
-        <iframe
-          id="music-frame"
-          src="https://www.youtube.com/embed/KwdL2k3AikE?autoplay=1&mute=1&enablejsapi=1"
-          title="24/7 Music Live"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-        <div class="video-overlay-top">
-          <div class="live-pill">LIVE</div>
-          <div class="viewer-pill">24/7 MUSIC</div>
+      <div class="section-title">실시간 미니게임 룸</div>
+      <div class="section-sub">외부 HTML5 미니게임을 바로 플레이할 수 있는 영역입니다.</div>
+
+      <div class="realtime-grid">
+        <!-- 카드 1 -->
+        <div class="live-card">
+          <iframe
+            src="https://playpager.com/embed/chess/index.html"
+            title="Mini Game 1"
+            scrolling="no"
+          ></iframe>
+          <div class="live-tag-top">
+            <div class="live-pill">LIVE</div>
+            <div class="viewer-pill">GAME #1</div>
+          </div>
+          <div class="live-info-bottom">
+            <div class="live-title">미니게임 #1</div>
+            <div class="live-meta">Playpager / HTML5 게임 임베드 예시입니다.</div>
+          </div>
         </div>
-        <div class="video-overlay-bottom">
-          <div class="video-title">PLAY ROOM · 24/7 뮤직 포인트 룸</div>
-          <div class="video-meta">
-            상단 24시간 음악 라이브를 배경으로 포인트 미니게임과 이벤트를 진행합니다.
+
+        <!-- 카드 2 -->
+        <div class="live-card">
+          <iframe
+            src="https://playpager.com/embed/reversi/index.html"
+            title="Mini Game 2"
+            scrolling="no"
+          ></iframe>
+          <div class="live-tag-top">
+            <div class="live-pill">LIVE</div>
+            <div class="viewer-pill">GAME #2</div>
+          </div>
+          <div class="live-info-bottom">
+            <div class="live-title">미니게임 #2</div>
+            <div class="live-meta">다른 퍼즐/보드 게임으로 교체해서 쓸 수 있습니다.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 포인트 플랜 / 게임 -->
-    <div class="section-card">
-      <div class="section-title">포인트 플랜 / 게임</div>
-      <div class="section-sub">미니게임과 포인트 플랜을 한 줄씩 카드로 구성했습니다.</div>
-
-      <div class="plan-list">
-        <div class="plan-card">
-          <div class="plan-header">
-            <div class="plan-title-wrap">
-              <div class="plan-title">숫자 맞추기</div>
-              <div class="plan-tag">미니게임</div>
-            </div>
-            <button class="btn btn-primary" data-game="guess">바로 플레이</button>
-          </div>
-          <div class="plan-desc">
-            1~5 랜덤 숫자를 맞추면 2배 지급되는 기본 포인트 게임입니다.
-          </div>
-          <div class="plan-footer">
-            <span class="plan-meta">참여비 50P · 성공 시 100P</span>
-          </div>
-        </div>
-
-        <div class="plan-card">
-          <div class="plan-header">
-            <div class="plan-title-wrap">
-              <div class="plan-title">하이로우 카드</div>
-              <div class="plan-tag">카드 게임</div>
-            </div>
-            <button class="btn btn-primary" data-game="highlow">바로 플레이</button>
-          </div>
-          <div class="plan-desc">
-            기준 숫자보다 높음/낮음만 고르는 심플 포인트 카드 게임입니다.
-          </div>
-          <div class="plan-footer">
-            <span class="plan-meta">참여비 100P · 성공 시 160P</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- 아래 다른 카드/플레이 섹션 전부 제거됨 -->
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<!-- 충전 모달 (원래 구조 유지) -->
 <div class="modal-backdrop" id="charge-modal-backdrop">
   <div class="modal-card">
     <div class="modal-header">
@@ -377,7 +354,6 @@
   const chargeBtn    = document.getElementById("charge-btn");
   const bonusBtn     = document.getElementById("bonus-btn");
   const toastEl      = document.getElementById("toast");
-  const planButtons  = document.querySelectorAll("[data-game]");
 
   const modalBackdrop = document.getElementById("charge-modal-backdrop");
   const modalCloseBtn = document.getElementById("charge-modal-close");
@@ -387,8 +363,8 @@
   const modalNickname = document.getElementById("modal-nickname");
   const modalPoints   = document.getElementById("modal-points");
 
-  const cooldowns = { bonus:5000, guess:3000, highlow:3000 };
-  const lastUsed  = { bonus:0,    guess:0,    highlow:0 };
+  const cooldowns = { bonus:5000 };
+  const lastUsed  = { bonus:0 };
 
   function loadState(){
     try{
@@ -472,9 +448,7 @@
     modalBackdrop.classList.add("show");
   });
 
-  function closeChargeModal(){
-    modalBackdrop.classList.remove("show");
-  }
+  function closeChargeModal(){ modalBackdrop.classList.remove("show"); }
 
   modalCloseBtn.addEventListener("click", closeChargeModal);
   modalOkBtn.addEventListener("click", closeChargeModal);
@@ -497,64 +471,6 @@
     saveState();
     renderUser();
     showToast("출석 보너스 200P가 지급되었습니다.");
-  });
-
-  function playGuess(){
-    if(!state.nickname){ showToast("로그인 후 이용해 주세요."); return; }
-    if(!checkCooldown("guess")) return;
-    const cost = 50;
-    if(state.points < cost){
-      showToast("포인트가 부족합니다. (50P 필요)"); return;
-    }
-    const answer = Math.floor(Math.random()*5)+1;
-    const input = prompt("1~5 사이 숫자를 하나 입력하세요.");
-    if(!input) return;
-    const guess = Number(input);
-    state.points -= cost;
-    if(guess === answer){
-      const reward = 100;
-      state.points += reward;
-      showToast(`정답! +${reward-cost}P (총 ${reward}P 획득)`);
-    }else{
-      showToast(`꽝! 정답은 ${answer}였습니다. (-${cost}P)`);
-    }
-    saveState();
-    renderUser();
-  }
-
-  function playHighLow(){
-    if(!state.nickname){ showToast("로그인 후 이용해 주세요."); return; }
-    if(!checkCooldown("highlow")) return;
-    const cost = 100;
-    if(state.points < cost){
-      showToast("포인트가 부족합니다. (100P 필요)"); return;
-    }
-    const base = Math.floor(Math.random()*10)+1;
-    const choice = prompt(`기준 숫자: ${base}\n'높음' 또는 '낮음'을 입력하세요.`);
-    if(!choice) return;
-    const c = choice.trim();
-    const next = Math.floor(Math.random()*10)+1;
-    state.points -= cost;
-    let win = false;
-    if(c === "높음" && next > base) win = true;
-    if(c === "낮음" && next < base) win = true;
-    if(win){
-      const reward = 160;
-      state.points += reward;
-      showToast(`성공! 새 숫자: ${next} ( +${reward-cost}P )`);
-    }else{
-      showToast(`실패! 새 숫자: ${next} (-${cost}P)`);
-    }
-    saveState();
-    renderUser();
-  }
-
-  planButtons.forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const game = btn.dataset.game;
-      if(game==="guess")   playGuess();
-      if(game==="highlow") playHighLow();
-    });
   });
 
   setInterval(()=>{
