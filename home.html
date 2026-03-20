@@ -5,8 +5,6 @@
   <title>CORE PLAY - 홈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* ======= HOME 공통 ======= */
-
     body{
       font-family:'Segoe UI',system-ui,sans-serif;
       background:
@@ -21,7 +19,6 @@
       padding:26px 12px;
       font-size:15px;
     }
-
     .app{
       width:100%;
       max-width:1400px;
@@ -32,14 +29,10 @@
         #020617;
       border-radius:20px;
       border:1px solid rgba(148,163,184,.45);
-      box-shadow:
-        0 0 70px rgba(37,99,235,.55),
-        0 26px 46px rgba(0,0,0,.95);
+      box-shadow:0 0 70px rgba(37,99,235,.55),0 26px 46px rgba(0,0,0,.95);
       overflow:hidden;
       position:relative;
     }
-
-    /* 헤더 */
 
     .header{
       padding:18px 22px;
@@ -49,411 +42,175 @@
       justify-content:space-between;
       background:linear-gradient(135deg,#020617,#020617 50%,#0b1120);
     }
-    .logo-area{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+    .logo-area{display:flex;align-items:center;gap:10px;}
     .logo-badge{
-      width:34px;
-      height:34px;
-      border-radius:11px;
+      width:34px;height:34px;border-radius:11px;
       background:radial-gradient(circle at 30% 0,#22c55e,#0f172a);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-weight:800;
-      font-size:18px;
+      display:flex;justify-content:center;align-items:center;
+      font-weight:800;font-size:18px;
       box-shadow:0 0 18px rgba(34,197,94,.7);
     }
     .logo-text-main{font-weight:800;font-size:19px;letter-spacing:.03em}
     .logo-text-sub{font-size:11px;color:#9ca3af}
-    .header-right{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
+    .header-right{display:flex;align-items:center;gap:8px;}
     .badge-online{
-      font-size:11px;
-      padding:4px 10px;
-      border-radius:999px;
+      font-size:11px;padding:4px 10px;border-radius:999px;
       border:1px solid rgba(52,211,153,.6);
-      background:rgba(22,163,74,.2);
-      color:#bbf7d0;
+      background:rgba(22,163,74,.2);color:#bbf7d0;
       text-shadow:0 0 4px rgba(34,197,94,.7);
     }
-    .user-info{
-      font-size:13px;
-      text-align:right;
-    }
-    .user-info span{color:#22c55e}
+    .user-info{font-size:13px;text-align:right;}
+    .user-info span{color:#22c55e;}
 
-    /* 레이아웃 */
-
+    /* 메인: 위 계정박스 + 아래 전체 게임/라이브 */
     .main{
-      display:grid;
-      grid-template-columns: minmax(0,1.05fr) minmax(0,1.45fr);
-      gap:18px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
       padding:18px 20px 20px;
     }
-    @media(max-width:900px){
-      .main{
-        grid-template-columns:1fr;
-        padding:16px 12px 18px;
-      }
-    }
-
-    .left{}
-    .right{}
-
-    /* 카드 공통 */
 
     .section-card{
       background:linear-gradient(145deg,rgba(15,23,42,.96),rgba(15,23,42,.98));
       border-radius:14px;
       border:1px solid rgba(55,65,81,.95);
-      padding:14px 14px 12px;
-      box-shadow:
-        0 0 30px rgba(15,23,42,.8),
-        0 0 18px rgba(15,23,42,.7);
+      padding:16px 16px 14px;
+      box-shadow:0 0 30px rgba(15,23,42,.8),0 0 18px rgba(15,23,42,.7);
     }
-    .section-title{
-      font-size:15px;
-      font-weight:600;
-      margin-bottom:6px;
-    }
-    .section-sub{
-      font-size:12px;
-      color:#9ca3af;
-      margin-bottom:8px;
-    }
+    .section-title{font-size:16px;font-weight:600;margin-bottom:8px;}
+    .section-sub{font-size:12px;color:#9ca3af;margin-bottom:10px;}
 
-    /* 디스코드 / 계정 */
+    .top-account{
+      display:grid;
+      grid-template-columns:minmax(0,1.3fr) minmax(0,1.7fr);
+      gap:14px;
+    }
+    @media(max-width:900px){
+      .top-account{grid-template-columns:1fr;}
+    }
 
     .discord-box{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:8px;
-      padding:7px 9px;
-      border-radius:11px;
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:10px;padding:8px 10px;border-radius:11px;
       border:1px solid rgba(59,130,246,.9);
       background:radial-gradient(circle at 0 0,#1d4ed822,transparent 55%);
     }
-    .discord-status{
-      font-size:12px;
-      color:#9ca3af;
-    }
-    .discord-status--ok{
-      color:#bfdbfe;
-    }
+    .discord-status{font-size:12px;color:#9ca3af;}
 
-    /* 로그인 박스 */
-
-    .auth-box{
-      display:flex;
-      flex-direction:column;
-      gap:5px;
-      margin-top:4px;
-    }
-    .auth-row{
-      display:flex;
-      gap:6px;
-    }
+    .auth-box{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+    .auth-row{display:flex;gap:6px;}
     .auth-row input{
-      flex:1;
-      padding:8px 10px;
-      border-radius:999px;
+      flex:1;padding:9px 11px;border-radius:999px;
       border:1px solid rgba(75,85,99,.9);
-      background:#020617;
-      color:#e5e7eb;
-      font-size:13px;
+      background:#020617;color:#e5e7eb;font-size:13px;
     }
-    .auth-help{
-      font-size:11px;
-      color:#6b7280;
-    }
-
-    /* 지갑 */
+    .auth-help{font-size:11px;color:#6b7280;}
 
     .wallet{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:8px;
-      padding:9px 10px;
-      border-radius:12px;
-      background:
-        radial-gradient(circle at 0 0,#22c55e24,transparent 55%),
-        radial-gradient(circle at 100% 0,#3b82f618,transparent 60%);
+      display:flex;justify-content:space-between;align-items:center;
+      margin-top:10px;padding:10px 11px;border-radius:12px;
+      background:radial-gradient(circle at 0 0,#22c55e24,transparent 55%),
+                 radial-gradient(circle at 100% 0,#3b82f618,transparent 60%);
       border:1px solid rgba(55,65,81,.95);
       box-shadow:0 0 18px rgba(34,197,94,.5);
     }
-    .wallet-left{ font-size:12px; }
-    .wallet-balance{
-      font-size:20px;
-      font-weight:700;
-      color:#22c55e;
+    .wallet-balance{font-size:22px;font-weight:700;color:#22c55e;}
+    .wallet-right{display:flex;gap:6px;}
+
+    /* 아래 전체 영역: 실시간 + 게임 카드 큰 그리드 */
+    .bottom-grid{
+      display:grid;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1.6fr);
+      gap:18px;
     }
-    .wallet-right{
-      display:flex;
-      gap:6px;
+    @media(max-width:1000px){
+      .bottom-grid{grid-template-columns:1fr;}
     }
 
-    /* 미니게임 */
+    .live-main{
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(55,65,81,.95);
+      background:#020617;
+      min-height:260px;
+    }
+    .live-main video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .video-overlay-top{
+      position:absolute;top:10px;left:10px;
+      display:flex;gap:6px;align-items:center;
+    }
+    .live-pill{
+      font-size:11px;padding:4px 8px;border-radius:999px;
+      background:rgba(220,38,38,.9);color:#fecaca;font-weight:600;
+    }
+    .viewer-pill{
+      font-size:11px;padding:4px 8px;border-radius:999px;
+      background:rgba(15,23,42,.85);
+      color:#e5e7eb;border:1px solid rgba(75,85,99,.9);
+    }
+    .video-overlay-bottom{
+      position:absolute;left:0;right:0;bottom:0;
+      padding:10px 12px;
+      background:linear-gradient(to top,rgba(15,23,42,.95),transparent);
+      font-size:13px;
+    }
+    .video-title{font-weight:600;font-size:14px;margin-bottom:2px;}
+    .video-meta{font-size:12px;color:#d1d5db;}
 
     .game-grid{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:8px;
-      margin-top:8px;
+      grid-template-columns:1fr;
+      gap:12px;
     }
-    @media(max-width:600px){
+    @media(max-width:1200px){
       .game-grid{grid-template-columns:1fr;}
     }
     .game-card{
-      border-radius:12px;
-      border:1px solid rgba(55,65,81,.95);
-      background:
-        radial-gradient(circle at 0 0,#0ea5e922,transparent 55%),
-        rgba(15,23,42,.98);
-      padding:8px 9px;
-      font-size:13px;
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-    .game-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .game-name{font-weight:600;font-size:14px;}
-    .game-cost{
-      font-size:12px;
-      color:#9ca3af;
-    }
-    .game-desc{
-      font-size:12px;
-      color:#9ca3af;
-    }
-    .game-footer{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:4px;
-    }
-    .game-status{
-      font-size:11px;
-      padding:2px 7px;
-      border-radius:999px;
-      border:1px solid rgba(59,130,246,.7);
-      color:#bfdbfe;
-    }
-
-    /* 이벤트 리스트 */
-
-    .filter-tabs{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin-bottom:8px;
-    }
-    .filter-btn{
-      font-size:11px;
-      padding:4px 9px;
-      border-radius:999px;
-      border:1px solid rgba(75,85,99,.9);
-      background:#020617;
-      color:#9ca3af;
-      cursor:pointer;
-    }
-    .filter-btn.active{
-      background:linear-gradient(135deg,#3b82f6,#22c55e);
-      border-color:transparent;
-      color:#f9fafb;
-      box-shadow:0 0 14px rgba(59,130,246,.7);
-    }
-    .match-list{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .match-card{
-      border-radius:11px;
-      border:1px solid rgba(55,65,81,.95);
-      background:radial-gradient(circle at 100% 0,#3b82f622,transparent 55%),rgba(15,23,42,.98);
-      padding:8px 9px;
-      font-size:13px;
-      display:grid;
-      grid-template-columns: minmax(0,1.6fr) minmax(0,1.3fr);
-      gap:8px;
-    }
-    @media(max-width:700px){
-      .match-card{
-        grid-template-columns:1fr;
-      }
-    }
-    .match-main{
-      display:flex;
-      flex-direction:column;
-      gap:3px;
-    }
-    .match-league{
-      color:#9ca3af;
-      font-size:12px;
-    }
-    .match-teams{
-      font-size:14px;
-      font-weight:600;
-    }
-    .match-time{
-      color:#6b7280;
-      font-size:12px;
-    }
-    .match-meta{
-      color:#9ca3af;
-      font-size:12px;
-    }
-    .match-actions{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-    .tag-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:4px;
-    }
-    .tag{
-      padding:1px 6px;
-      border-radius:999px;
-      border:1px solid rgba(55,65,81,.9);
-      font-size:11px;
-      color:#9ca3af;
-    }
-    .btn-play{
-      padding:5px 10px;
-      border-radius:999px;
-      border:none;
-      cursor:pointer;
-      font-size:12px;
-      font-weight:600;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#020617;
-    }
-
-    /* 모달 */
-
-    .modal-backdrop{
-      position:fixed;
-      inset:0;
-      background:rgba(15,23,42,.88);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:80;
-    }
-    .modal-card{
-      width:100%;
-      max-width:380px;
-      background:radial-gradient(circle at 0 0,#22c55e18,transparent 55%),#020617;
       border-radius:16px;
-      border:1px solid rgba(148,163,184,.7);
-      box-shadow:0 20px 40px rgba(0,0,0,.95);
-      padding:12px 14px 12px;
-    }
-    .modal-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:6px;
-    }
-    .modal-title{
+      border:1px solid rgba(55,65,81,.95);
+      background:radial-gradient(circle at 0 0,#0ea5e922,transparent 55%),rgba(15,23,42,.98);
+      padding:12px 14px;
       font-size:14px;
-      font-weight:600;
-    }
-    .modal-close{
-      border:none;
-      background:transparent;
-      color:#9ca3af;
-      cursor:pointer;
-      font-size:13px;
-    }
-    .modal-body{
-      font-size:12px;
-      color:#d1d5db;
-    }
-    .modal-desc{
-      margin-bottom:8px;
-    }
-    .modal-info{
-      border-radius:10px;
-      border:1px solid rgba(55,65,81,.9);
-      background:#020617;
-      padding:6px 7px;
-      margin-bottom:6px;
-    }
-    .modal-row{
       display:flex;
-      justify-content:space-between;
-      font-size:12px;
-      margin-bottom:2px;
-    }
-    .modal-label{
-      color:#9ca3af;
-    }
-    .modal-value{
-      color:#e5e7eb;
-    }
-    .modal-note{
-      font-size:11px;
-      color:#6b7280;
-    }
-    .modal-footer{
-      display:flex;
-      justify-content:flex-end;
+      flex-direction:column;
       gap:6px;
-      margin-top:8px;
     }
-
-    /* 공통 버튼 */
+    .game-header{display:flex;justify-content:space-between;align-items:center;}
+    .game-name{font-weight:600;font-size:15px;}
+    .game-cost{font-size:12px;color:#9ca3af;}
+    .game-desc{font-size:13px;color:#9ca3af;}
+    .game-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+    .game-status{
+      font-size:11px;padding:3px 8px;border-radius:999px;
+      border:1px solid rgba(59,130,246,.7);color:#bfdbfe;
+    }
 
     .btn{
-      border:none;
-      border-radius:999px;
-      padding:7px 14px;
-      font-size:13px;
-      cursor:pointer;
-      font-weight:600;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      border:none;border-radius:999px;
+      padding:7px 14px;font-size:13px;cursor:pointer;
+      font-weight:600;display:inline-flex;align-items:center;justify-content:center;
+      gap:6px;transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
     }
     .btn-primary{
       background:linear-gradient(135deg,#22c55e,#16a34a);
       color:#020617;
       box-shadow:0 0 16px rgba(34,197,94,.55);
     }
-    .btn-primary:hover{
-      transform:translateY(-1px);
-      box-shadow:0 0 22px rgba(34,197,94,.75);
-    }
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 22px rgba(34,197,94,.75);}
     .btn-outline{
-      background:transparent;
-      color:#e5e7eb;
+      background:transparent;color:#e5e7eb;
       border:1px solid rgba(148,163,184,.7);
     }
-    .btn-outline:hover{
-      background:rgba(15,23,42,.95);
-    }
+    .btn-outline:hover{background:rgba(15,23,42,.95);}
 
     .toast{
-      position:fixed;
-      left:50%;
-      bottom:24px;
+      position:fixed;left:50%;bottom:24px;
       transform:translateX(-50%);
       background:rgba(15,23,42,.95);
       color:#e5e7eb;
@@ -473,64 +230,78 @@
       <div class="logo-badge">C</div>
       <div>
         <div class="logo-text-main">CORE PLAY</div>
-        <div class="logo-text-sub">포인트 게임 · 이벤트 허브</div>
+        <div class="logo-text-sub">실시간 룸 · 포인트 게임 허브</div>
       </div>
     </div>
     <div class="header-right">
       <div class="badge-online" id="status-badge">● ONLINE</div>
-      <div class="user-info" id="user-info">
-        비로그인 상태입니다
-      </div>
+      <div class="user-info" id="user-info">비로그인 상태입니다</div>
       <button class="btn btn-outline" id="logout-btn" style="display:none;">로그아웃</button>
       <button class="btn btn-outline" onclick="location.href='index.html'">LOBBY</button>
     </div>
   </header>
 
   <div class="main">
-    <!-- 좌측 -->
-    <div class="left">
+    <!-- 상단: 디코 + 닉네임 + 지갑 -->
+    <div class="section-card">
+      <div class="section-title">내 포인트 계정</div>
+      <div class="section-sub">디스코드 연동 후, 해당 계정으로만 포인트 기능을 사용할 수 있습니다.</div>
+
+      <div class="top-account">
+        <div>
+          <div class="discord-box" id="discord-box">
+            <div class="discord-status" id="discord-status">디스코드 미연동 상태</div>
+            <button class="btn btn-primary" id="discord-connect-btn">디스코드로 승인 / 연동</button>
+          </div>
+
+          <div class="auth-box" id="auth-box">
+            <div class="auth-row">
+              <input type="text" id="nickname-input" placeholder="닉네임 입력 (최대 16자)">
+            </div>
+            <div class="auth-row">
+              <button class="btn btn-outline" id="login-btn">닉네임 로그인 / 등록</button>
+            </div>
+            <div class="auth-help">※ 디스코드 연동 후 사용할 표시용 닉네임입니다. (로컬 저장)</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="wallet" id="wallet-box" style="display:none;">
+            <div>
+              <div style="font-size:12px;color:#9ca3af;">현재 보유 포인트</div>
+              <div class="wallet-balance" id="balance-text">0P</div>
+            </div>
+            <div class="wallet-right">
+              <button class="btn btn-outline" id="charge-btn">포인트 충전</button>
+              <button class="btn btn-outline" id="bonus-btn">출석 보너스</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단: 왼쪽 실시간, 오른쪽 게임 카드 전부 -->
+    <div class="bottom-grid">
       <div class="section-card">
-        <div class="section-title">내 포인트 계정</div>
-        <div class="section-sub">
-          디스코드 계정을 한 번 연동하면, 해당 계정으로만 포인트 기능을 사용할 수 있습니다.
-        </div>
-
-        <div class="discord-box" id="discord-box">
-          <div class="discord-status" id="discord-status">디스코드 미연동 상태</div>
-          <button class="btn btn-primary" id="discord-connect-btn">
-            디스코드로 승인 / 연동
-          </button>
-        </div>
-
-        <div class="auth-box" id="auth-box">
-          <div class="auth-row">
-            <input type="text" id="nickname-input" placeholder="닉네임 입력 (최대 16자)">
+        <div class="section-title">실시간 룸</div>
+        <div class="section-sub">실제 영상 대신 데모 클립/애니메이션을 넣어둘 수 있는 영역입니다.</div>
+        <div class="live-main">
+          <!-- demo.mp4 위치에 네 파일 경로 넣으면 됨 -->
+          <video src="demo.mp4" autoplay muted loop playsinline></video>
+          <div class="video-overlay-top">
+            <div class="live-pill">LIVE</div>
+            <div class="viewer-pill">동시 시청 1,284명</div>
           </div>
-          <div class="auth-row">
-            <button class="btn btn-outline" id="login-btn">닉네임 로그인 / 등록</button>
-          </div>
-          <div class="auth-help">
-            ※ 디스코드 연동 후 사용할 표시용 닉네임입니다. (로컬 저장)
-          </div>
-        </div>
-
-        <div class="wallet" id="wallet-box" style="display:none;">
-          <div class="wallet-left">
-            <div style="font-size:12px;color:#9ca3af;">현재 보유 포인트</div>
-            <div class="wallet-balance" id="balance-text">0P</div>
-          </div>
-          <div class="wallet-right">
-            <button class="btn btn-outline" id="charge-btn">포인트 충전</button>
-            <button class="btn btn-outline" id="bonus-btn">출석 보너스</button>
+          <div class="video-overlay-bottom">
+            <div class="video-title">CORE LIVE ROOM · 포인트 연동 데모</div>
+            <div class="video-meta">채팅, 리액션, 포인트 미션이 실시간으로 연동되는 화면입니다.</div>
           </div>
         </div>
       </div>
 
-      <div class="section-card" style="margin-top:10px;">
-        <div class="section-title">포인트 미니게임</div>
-        <div class="section-sub">
-          디스코드 승인 + 닉네임 로그인 완료 후에만 플레이할 수 있습니다.
-        </div>
+      <div class="section-card">
+        <div class="section-title">포인트 게임 & 실시간 인터랙션</div>
+        <div class="section-sub">스포츠 매치 대신, 포인트 게임/미션 카드로 구성된 데모 영역입니다.</div>
 
         <div class="game-grid">
           <div class="game-card">
@@ -560,26 +331,36 @@
               <button class="btn btn-primary game-play-btn" data-game="highlow">플레이</button>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- 우측 -->
-    <div class="right">
-      <div class="section-card">
-        <div class="section-title">이벤트 & 매치 리스트</div>
-        <div class="section-sub">
-          실제 베팅/환전 없이, 포인트만 사용하는 데모 이벤트입니다.
-        </div>
+          <div class="game-card">
+            <div class="game-header">
+              <div>
+                <div class="game-name">실시간 미션 슬롯</div>
+                <div class="game-cost">참여비: 30P · 성공 시 60P</div>
+              </div>
+            </div>
+            <div class="game-desc">실시간 룸에서 특정 순간에만 열리는 미션을 가정한 데모 카드.</div>
+            <div class="game-footer">
+              <span class="game-status">실시간 · 미션</span>
+              <button class="btn btn-outline">준비중</button>
+            </div>
+          </div>
 
-        <div class="filter-tabs">
-          <button class="filter-btn active" data-filter="all">전체</button>
-          <button class="filter-btn" data-filter="football">축구 테마</button>
-          <button class="filter-btn" data-filter="esports">e스포츠</button>
-          <button class="filter-btn" data-filter="mini">미니게임</button>
-        </div>
+          <div class="game-card">
+            <div class="game-header">
+              <div>
+                <div class="game-name">랜덤 리액션 보상</div>
+                <div class="game-cost">참여비: 20P · 성공 시 80P</div>
+              </div>
+            </div>
+            <div class="game-desc">리액션/이모지 응답에 따라 포인트 드랍이 발생하는 연동 영역.</div>
+            <div class="game-footer">
+              <span class="game-status">연동 · 리액션</span>
+              <button class="btn btn-outline">준비중</button>
+            </div>
+          </div>
 
-        <div class="match-list" id="match-list"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -587,53 +368,9 @@
 
 <div class="toast" id="toast"></div>
 
-<div class="modal-backdrop" id="charge-modal-backdrop" style="display:none;">
-  <div class="modal-card">
-    <div class="modal-header">
-      <div class="modal-title">포인트 충전 요청</div>
-      <button class="modal-close" id="charge-modal-close">✕</button>
-    </div>
-    <div class="modal-body">
-      <p class="modal-desc">
-        포인트 충전은 디스코드 봇에서 승인된 요청만 처리됩니다.<br>
-        아래 정보를 확인 후 디스코드에서 충전 요청을 보내세요.
-      </p>
-      <div class="modal-info">
-        <div class="modal-row">
-          <span class="modal-label">디스코드 계정</span>
-          <span class="modal-value" id="modal-discord-user">연동되지 않음</span>
-        </div>
-        <div class="modal-row">
-          <span class="modal-label">표시 닉네임</span>
-          <span class="modal-value" id="modal-nickname">-</span>
-        </div>
-        <div class="modal-row">
-          <span class="modal-label">현재 보유 포인트</span>
-          <span class="modal-value" id="modal-points">0P</span>
-        </div>
-      </div>
-      <p class="modal-note">
-        승인된 충전만 포인트에 반영되며, 이 화면에서는 직접 포인트를 입력할 수 없습니다.
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" id="charge-modal-discord-btn">디스코드 열기</button>
-      <button class="btn btn-primary" id="charge-modal-ok">확인</button>
-    </div>
-  </div>
-</div>
-
 <script>
   const STORAGE_KEY = "coreplay_user";
   let state = { nickname: null, points: 0, lastBonusDate: null };
-
-  const matches = [
-    { id:1, type:"football", league:"CORE 리그 · 축구", title:"RED FC vs BLUE FC", time:"오늘 21:00", desc:"득점 예측 미니 이벤트 (포인트 참여)", tag:["축구","라이브예정"], cost:100 },
-    { id:2, type:"esports", league:"e-ARENA · FPS", title:"RIVALS CUP S2", time:"오늘 22:30", desc:"킬 수 맞추기 포인트 챌린지", tag:["FPS","e스포츠"], cost:150 },
-    { id:3, type:"football", league:"CORE 리그 · 축구", title:"CITY SC vs UNITED SC", time:"내일 19:00", desc:"승부 예측 참여형 이벤트", tag:["축구","이벤트"], cost:80 },
-    { id:4, type:"mini", league:"MINI GAME", title:"룰렛 스핀 이벤트", time:"상시 참여 가능", desc:"룰렛 돌려 랜덤 보상 받기", tag:["룰렛","랜덤"], cost:50 },
-    { id:5, type:"esports", league:"e-ARENA · MOBA", title:"CORE 챔피언십", time:"이번 주말", desc:"승리팀 예측 참여형 포인트 이벤트", tag:["MOBA","e스포츠"], cost:120 },
-  ];
 
   const userInfoEl   = document.getElementById("user-info");
   const logoutBtn    = document.getElementById("logout-btn");
@@ -644,10 +381,11 @@
   const nicknameInput= document.getElementById("nickname-input");
   const chargeBtn    = document.getElementById("charge-btn");
   const bonusBtn     = document.getElementById("bonus-btn");
-  const matchListEl  = document.getElementById("match-list");
-  const filterBtns   = document.querySelectorAll(".filter-btn");
   const toastEl      = document.getElementById("toast");
   const gamePlayBtns = document.querySelectorAll(".game-play-btn");
+
+  const cooldowns = { bonus:5000, guess:3000, highlow:3000 };
+  const lastUsed  = { bonus:0,    guess:0,    highlow:0 };
 
   function loadState(){
     try{
@@ -660,10 +398,7 @@
       }
     }catch(e){}
   }
-
-  function saveState(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
+  function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
   function renderUser(){
     if(state.nickname){
@@ -690,19 +425,6 @@
     setTimeout(()=>{toastEl.style.display = "none";}, 1800);
   }
 
-  const cooldowns = {
-    bonus:   1000 * 5,
-    guess:   1000 * 3,
-    highlow: 1000 * 3,
-    event:   1000 * 2
-  };
-  const lastUsed = {
-    bonus:   0,
-    guess:   0,
-    highlow: 0,
-    event:   0
-  };
-
   function checkCooldown(key){
     const now = Date.now();
     const gap = now - (lastUsed[key] || 0);
@@ -715,68 +437,10 @@
     return true;
   }
 
-  function renderMatches(filter="all"){
-    matchListEl.innerHTML = "";
-    matches
-      .filter(m => filter==="all" ? true : m.type===filter)
-      .forEach(m => {
-        const div = document.createElement("div");
-        div.className = "match-card";
-        div.innerHTML = `
-          <div class="match-main">
-            <div class="match-league">${m.league}</div>
-            <div class="match-teams">${m.title}</div>
-            <div class="match-time">${m.time}</div>
-            <div class="match-meta">${m.desc}</div>
-          </div>
-          <div class="match-actions">
-            <div class="tag-row">
-              ${m.tag.map(t=>`<span class="tag">${t}</span>`).join("")}
-              <span class="tag">${m.cost}P 필요</span>
-            </div>
-            <button class="btn-play" data-id="${m.id}">포인트로 참여</button>
-          </div>
-        `;
-        matchListEl.appendChild(div);
-      });
-
-    document.querySelectorAll(".btn-play").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const id = Number(btn.dataset.id);
-        handleEventJoin(id);
-      });
-    });
-  }
-
-  function handleEventJoin(id){
-    if(!state.nickname){
-      showToast("로그인 후 참여할 수 있습니다.");
-      return;
-    }
-    if(!checkCooldown("event")) return;
-
-    const match = matches.find(m=>m.id===id);
-    if(!match) return;
-    if(state.points < match.cost){
-      showToast(`포인트가 부족합니다. (${match.cost}P 필요)`);
-      return;
-    }
-    state.points -= match.cost;
-    saveState();
-    renderUser();
-    showToast(`${match.title} 이벤트에 참여했습니다. (-${match.cost}P)`);
-  }
-
   loginBtn.addEventListener("click",()=>{
     const nick = nicknameInput.value.trim();
-    if(!nick){
-      showToast("닉네임을 입력해 주세요.");
-      return;
-    }
-    if(nick.length > 16){
-      showToast("닉네임은 16자 이내로 입력해 주세요.");
-      return;
-    }
+    if(!nick){ showToast("닉네임을 입력해 주세요."); return; }
+    if(nick.length > 16){ showToast("닉네임은 16자 이내로 입력해 주세요."); return; }
     state.nickname = nick;
     if(state.points === 0){
       state.points = 500;
@@ -794,20 +458,15 @@
   });
 
   chargeBtn.addEventListener("click",()=>{
-    if(!state.nickname){
-      showToast("로그인 후 이용해 주세요.");
-      return;
-    }
+    if(!state.nickname){ showToast("로그인 후 이용해 주세요."); return; }
     const input = prompt("충전할 포인트를 입력해 주세요. (1 ~ 50000)");
     if(!input) return;
     const amount = Number(input);
     if(!Number.isFinite(amount) || amount<=0){
-      showToast("올바른 숫자를 입력해 주세요.");
-      return;
+      showToast("올바른 숫자를 입력해 주세요."); return;
     }
     if(amount > 50000){
-      showToast("한 번에 최대 50,000P까지만 충전할 수 있습니다.");
-      return;
+      showToast("한 번에 최대 50,000P까지만 충전할 수 있습니다."); return;
     }
     state.points += amount;
     saveState();
@@ -816,16 +475,11 @@
   });
 
   bonusBtn.addEventListener("click",()=>{
-    if(!state.nickname){
-      showToast("로그인 후 이용해 주세요.");
-      return;
-    }
+    if(!state.nickname){ showToast("로그인 후 이용해 주세요."); return; }
     if(!checkCooldown("bonus")) return;
-
     const today = new Date().toISOString().slice(0,10);
     if(state.lastBonusDate === today){
-      showToast("오늘은 이미 출석 보너스를 받았습니다.");
-      return;
+      showToast("오늘은 이미 출석 보너스를 받았습니다."); return;
     }
     state.lastBonusDate = today;
     state.points += 200;
@@ -835,16 +489,11 @@
   });
 
   function playGuess(){
-    if(!state.nickname){
-      showToast("로그인 후 이용해 주세요.");
-      return;
-    }
+    if(!state.nickname){ showToast("로그인 후 이용해 주세요."); return; }
     if(!checkCooldown("guess")) return;
-
     const cost = 50;
     if(state.points < cost){
-      showToast("포인트가 부족합니다. (50P 필요)");
-      return;
+      showToast("포인트가 부족합니다. (50P 필요)"); return;
     }
     const answer = Math.floor(Math.random()*5)+1;
     const input = prompt("1~5 사이 숫자를 하나 입력하세요.");
@@ -863,16 +512,11 @@
   }
 
   function playHighLow(){
-    if(!state.nickname){
-      showToast("로그인 후 이용해 주세요.");
-      return;
-    }
+    if(!state.nickname){ showToast("로그인 후 이용해 주세요."); return; }
     if(!checkCooldown("highlow")) return;
-
     const cost = 100;
     if(state.points < cost){
-      showToast("포인트가 부족합니다. (100P 필요)");
-      return;
+      showToast("포인트가 부족합니다. (100P 필요)"); return;
     }
     const base = Math.floor(Math.random()*10)+1;
     const choice = prompt(`기준 숫자: ${base}\n'높음' 또는 '낮음'을 입력하세요.`);
@@ -883,7 +527,6 @@
     let win = false;
     if(c === "높음" && next > base) win = true;
     if(c === "낮음" && next < base) win = true;
-
     if(win){
       const reward = 160;
       state.points += reward;
@@ -903,15 +546,6 @@
     });
   });
 
-  filterBtns.forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      filterBtns.forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      const filter = btn.dataset.filter;
-      renderMatches(filter);
-    });
-  });
-
   setInterval(()=>{
     const now = new Date();
     const t = now.toTimeString().slice(0,8);
@@ -920,7 +554,6 @@
 
   loadState();
   renderUser();
-  renderMatches("all");
 </script>
 </body>
 </html>
