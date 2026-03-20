@@ -11,7 +11,6 @@
       padding:0;
     }
 
-    /* ===== 공통 버튼 ===== */
     .btn{
       border:none;
       border-radius:999px;
@@ -44,7 +43,6 @@
       background:radial-gradient(circle at 0 0,#22c55e26,transparent 55%);
     }
 
-    /* ===== HOME 전체 배경 ===== */
     body{
       font-family:'Segoe UI',system-ui,sans-serif;
       background:
@@ -77,7 +75,6 @@
       position:relative;
     }
 
-    /* 헤더 */
     .header{
       padding:16px 20px;
       border-bottom:1px solid rgba(55,65,81,.8);
@@ -125,7 +122,6 @@
     }
     .user-info span{color:#22c55e}
 
-    /* 메인 전체 레이아웃 */
     .main{
       display:flex;
       flex-direction:column;
@@ -151,7 +147,6 @@
       margin-bottom:6px;
     }
 
-    /* 상단: 계정/지갑 */
     .top-account-grid{
       display:grid;
       grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
@@ -208,7 +203,6 @@
         radial-gradient(circle at 100% 0,#3b82f622,transparent 60%),
         #020617;
       border:1px solid rgba(55,65,81,1);
-      box-shadow:0 0 18px rgba(34,197,94,.5);
     }
     .wallet-balance{
       font-size:22px;
@@ -221,7 +215,6 @@
       gap:6px;
     }
 
-    /* 중앙 실시간 */
     .live-main{
       position:relative;
       border-radius:18px;
@@ -230,11 +223,11 @@
       background:#020617;
       min-height:260px;
     }
-    .live-main video{
+    .live-main iframe{
       width:100%;
       height:100%;
-      object-fit:cover;
       display:block;
+      border:none;
     }
     .video-overlay-top{
       position:absolute;
@@ -281,7 +274,6 @@
       color:#d1d5db;
     }
 
-    /* 포인트 플랜 / 게임 */
     .plan-list{
       display:flex;
       flex-direction:column;
@@ -335,13 +327,7 @@
       font-size:12px;
       color:#9ca3af;
     }
-    .plan-card button[disabled]{
-      opacity:.6;
-      cursor:default;
-      box-shadow:none;
-    }
 
-    /* 토스트 */
     .toast{
       position:fixed;
       left:50%;
@@ -355,10 +341,8 @@
       color:#e5e7eb;
       display:none;
       z-index:90;
-      box-shadow:0 0 16px rgba(15,23,42,.95);
     }
 
-    /* 모달 */
     .modal-backdrop{
       position:fixed;
       inset:0;
@@ -454,7 +438,7 @@
   </header>
 
   <div class="main">
-    <!-- 1. 계정 / 닉네임 / 지갑 -->
+    <!-- 계정 / 닉네임 / 지갑 -->
     <div class="section-card">
       <div class="section-title">내 포인트 계정</div>
       <div class="section-sub">디스코드 연동 후, 해당 계정으로만 포인트 · 에볼루션 룸을 이용할 수 있습니다.</div>
@@ -492,38 +476,37 @@
       </div>
     </div>
 
-    <!-- 2. 실시간 룸 -->
+    <!-- 에볼루션 실시간 룸 -->
     <div class="section-card">
       <div class="section-title">실시간 룸</div>
-      <div class="section-sub">실제 방송 / 에볼루션 스트림과 함께 포인트 미션이 붙는 영역입니다.</div>
+      <div class="section-sub">에볼루션 테이블 화면과 함께 포인트 미션이 붙는 영역입니다.</div>
       <div class="live-main">
-        <video
-          id="live-video"
-          autoplay
-          muted
-          playsinline
-          controls
-        ></video>
+        <iframe
+          id="evo-frame"
+          src="https://skylinextm.evo-games.com/frontend/evo/r2/#category=korean_dealer&game=baccarat&table_id=p63cmvmwagteemoy&lobby_launch_id=8889e3d8c9de46bba4c8d29399ca8d6d"
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
         <div class="video-overlay-top">
           <div class="live-pill">LIVE</div>
-          <div class="viewer-pill">실시간 방송 중</div>
+          <div class="viewer-pill">에볼루션 테이블 연결</div>
         </div>
         <div class="video-overlay-bottom">
-          <div class="video-title">PLAY ROOM · 실시간 포인트 연동</div>
+          <div class="video-title">PLAY ROOM · 에볼루션 포인트 룸</div>
           <div class="video-meta">
-            실시간 스트림에 맞춰 포인트 미션 · 에볼루션 룸 입장 버튼이 이 화면에서 활성화됩니다.
+            위 에볼루션 테이블 진행 상황에 맞춰 포인트가 정산됩니다.
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3. 포인트 플랜 / 미니게임 / 에볼루션 -->
+    <!-- 포인트 플랜 / 게임 -->
     <div class="section-card">
       <div class="section-title">포인트 플랜 / 게임</div>
       <div class="section-sub">미니게임과 에볼루션 연동을 한 줄씩 카드로 구성했습니다.</div>
 
       <div class="plan-list">
-        <!-- 카드 1: 숫자 맞추기 -->
         <div class="plan-card">
           <div class="plan-header">
             <div class="plan-title-wrap">
@@ -540,7 +523,6 @@
           </div>
         </div>
 
-        <!-- 카드 2: 하이로우 -->
         <div class="plan-card">
           <div class="plan-header">
             <div class="plan-title-wrap">
@@ -557,7 +539,6 @@
           </div>
         </div>
 
-        <!-- 카드 3: 에볼루션 룸 -->
         <div class="plan-card">
           <div class="plan-header">
             <div class="plan-title-wrap">
@@ -567,48 +548,12 @@
             <button class="btn btn-primary" data-game="evo">에볼 룸 입장</button>
           </div>
           <div class="plan-desc">
-            에볼루션 테이블 결과에 맞춰 포인트를 적립/차감하는 실전 포인트 룸입니다.<br>
-            바카/블랙잭/룰렛 결과를 기반으로, 방송에서 안내하는 플랜대로 포인트가 정산됩니다.
+            에볼루션 테이블 결과에 맞춰 포인트를 적립/차감하는 실전 포인트 룸입니다.
           </div>
           <div class="plan-footer">
             <span class="plan-meta">참여비 100P 기준 · 플랜별 배수는 룸 내 안내</span>
           </div>
         </div>
-
-        <!-- 카드 4: 실시간 미션 슬롯 -->
-        <div class="plan-card">
-          <div class="plan-header">
-            <div class="plan-title-wrap">
-              <div class="plan-title">실시간 미션 슬롯</div>
-              <div class="plan-tag">실시간</div>
-            </div>
-            <button class="btn btn-outline" disabled>방송 중 활성화</button>
-          </div>
-          <div class="plan-desc">
-            특정 방송 구간에서만 열리는 미션 슬롯입니다. 진행자는 방송에서 OPEN/마감 시점을 안내합니다.
-          </div>
-          <div class="plan-footer">
-            <span class="plan-meta">구간별 참여비/배수는 방송 공지 참고</span>
-          </div>
-        </div>
-
-        <!-- 카드 5: 리액션 보상 -->
-        <div class="plan-card">
-          <div class="plan-header">
-            <div class="plan-title-wrap">
-              <div class="plan-title">랜덤 리액션 보상</div>
-              <div class="plan-tag">연동</div>
-            </div>
-            <button class="btn btn-outline" disabled>채팅 연동</button>
-          </div>
-          <div class="plan-desc">
-            디스코드/방송 채팅 리액션에 따라 포인트 드랍이 발생하는 연동 플랜입니다.
-          </div>
-          <div class="plan-footer">
-            <span class="plan-meta">참여 조건 및 보상은 각 이벤트별 공지</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -616,7 +561,6 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- 충전 모달 -->
 <div class="modal-backdrop" id="charge-modal-backdrop">
   <div class="modal-card">
     <div class="modal-header">
@@ -751,7 +695,6 @@
     showToast("로그아웃되었습니다.");
   });
 
-  // 충전 버튼 -> 모달
   chargeBtn.addEventListener("click",()=>{
     if(!state.nickname){
       showToast("로그인 후 이용해 주세요.");
@@ -845,8 +788,8 @@
       showToast("로그인 후 이용해 주세요.");
       return;
     }
-    alert("에볼루션 룸 연동: 여기에서 실제 에볼루션 테이블 페이지 또는 내부 룸 URL로 이동시킵니다.");
-    // window.location.href = 'evolution-room.html?nick=' + encodeURIComponent(state.nickname);
+    // 여기서 별도 룸으로 보내고 싶으면 window.open / location.href 사용
+    alert("에볼루션 룸 별도 페이지로 이동하도록 연결할 수 있습니다.");
   }
 
   planButtons.forEach(btn=>{
@@ -866,31 +809,6 @@
 
   loadState();
   renderUser();
-</script>
-
-<!-- HLS 라이브 재생용 스크립트 -->
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<script>
-  (function initLive() {
-    const video = document.getElementById('live-video');
-    if (!video) return;
-
-    // TODO: 여기에 네 HLS 라이브 주소만 넣으면 됨 (예: nginx-rtmp 등)
-    const liveSrc = 'https://example.com/live/stream.m3u8';
-
-    if (window.Hls && Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(liveSrc);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.ERROR, function (event, data) {
-        console.error('HLS error', data);
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = liveSrc;
-    } else {
-      console.warn('HLS를 지원하지 않는 브라우저입니다.');
-    }
-  })();
 </script>
 </body>
 </html>
